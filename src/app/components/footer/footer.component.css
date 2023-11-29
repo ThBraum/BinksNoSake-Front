@@ -1,0 +1,16 @@
+footer {
+  border-top: solid #000000 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+}
+
+h3 {
+  padding: 1em;
+}
+
+span {
+  color: #ffffff;
+}
