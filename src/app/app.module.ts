@@ -9,6 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -57,6 +61,10 @@ function tokenGetter() {
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatSelectModule,
+    MatMenuModule,
+    MatTabsModule,
+    MatSidenavModule,
     JwtModule.forRoot({ config: { tokenGetter } }),
   ],
   providers: [

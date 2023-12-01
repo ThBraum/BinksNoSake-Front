@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Usuario } from 'src/app/interfaces/usuario/usuario';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
@@ -10,7 +10,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   subscription!: Subscription;
   routerSubscription!: Subscription;
 
@@ -22,6 +22,16 @@ export class HeaderComponent implements OnInit {
     private readonly snackBarService: SnackBarService) { }
 
   ngOnInit(): void {
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.usuario = JSON.parse(localStorage.getItem('usuario')!);
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.routerSubscription.unsubscribe();
   }
 
   logout(): void {

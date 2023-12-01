@@ -11,7 +11,9 @@ import { Usuario } from 'src/app/interfaces/usuario/usuario';
 export class UsuarioFormComponent {
   @Input() textoTipoAcaoBotao: String = '';
   @Input() dadosUsuario?: Usuario;
-  @Input() coletaDadosBasicos: boolean = true;
+  @Input() usuarioLogin: boolean = true;
+  @Input() usuarioCreate: boolean = true;
+  @Input() usuarioUpdate: boolean = true;
   @Input() coletaFuncao: boolean = true;
   @Input() coletaImagem: boolean = true;
   @Input() coletaSenha: boolean = true;
@@ -31,28 +33,32 @@ export class UsuarioFormComponent {
   ngOnInit(): void {
     this.usuarioForm = this.fb.group({
       id: [{ value: this.dadosUsuario?.id, disabled: false }],
+      username: [
+        { value: this.dadosUsuario?.username, disabled: false },
+        this.usuarioLogin ? [Validators.required] : [],
+      ],
       primeiroNome: [
         { value: this.dadosUsuario?.primeiroNome, disabled: false },
-        this.coletaDadosBasicos ? [Validators.required] : [],
+        this.usuarioCreate ? [Validators.required] : [],
       ],
       ultimoNome: [
         { value: this.dadosUsuario?.ultimoNome, disabled: false },
-        this.coletaDadosBasicos ? [Validators.required] : [],
+        this.usuarioCreate ? [Validators.required] : [],
       ],
       email: [
         { value: this.dadosUsuario?.email, disabled: false },
-        this.coletaDadosBasicos ? [Validators.email, Validators.required] : [],
+        this.usuarioCreate ? [Validators.email, Validators.required] : [],
       ],
       phoneNumber: [
         { value: this.dadosUsuario?.phoneNumber, disabled: false },
-        this.coletaDadosBasicos ? [Validators.required] : [],
+        this.usuarioCreate ? [Validators.required] : [],
       ],
       funcao: [
         { value: this.dadosUsuario?.funcao, disabled: false },
-        this.coletaFuncao ? [Validators.required] : [],
+        this.usuarioUpdate ? [Validators.required] : [],
       ],
-      senha: [
-        { value: null, disabled: false },
+      password: [
+        { value: this.dadosUsuario?.password, disabled: false },
         this.coletaSenha ? [Validators.required, Validators.minLength(6)] : [],
       ],
       confirmarSenha: [
@@ -61,38 +67,58 @@ export class UsuarioFormComponent {
           ? [Validators.required, Validators.minLength(6), this.validarSenha]
           : [],
       ],
+      imagemUrl: [
+        { value: this.dadosUsuario?.imagemUrl, disabled: false },
+        this.usuarioUpdate ? [] : [],
+      ]
     });
-    this.url = this.dadosUsuario?.imagemUrl;
   }
 
   submit(): void {
     const dadosFormulario: Usuario = {
       id: '',
-      username: '',
-      email: '',
       primeiroNome: '',
       ultimoNome: '',
+      username: '',
+      email: '',
+      phoneNumber: '',
+      password: '',
       imagemUrl: '',
-      password: ''
     };
 
     if (this.usuarioForm.value.id) {
       dadosFormulario.id = this.usuarioForm.value.id;
     }
 
-    if (this.coletaDadosBasicos) {
-      dadosFormulario.primeiroNome = this.usuarioForm.value.primeiroNome;
-      dadosFormulario.ultimoNome = this.usuarioForm.value.ultimoNome;
+    if (this.usuarioLogin) {
+      dadosFormulario.username = this.usuarioForm.value.username;
+      dadosFormulario.password = this.usuarioForm.value.password;
+    }
+
+    if (this.usuarioCreate) {
       dadosFormulario.username = this.usuarioForm.value.username;
       dadosFormulario.email = this.usuarioForm.value.email;
+      dadosFormulario.primeiroNome = this.usuarioForm.value.primeiroNome;
+      dadosFormulario.ultimoNome = this.usuarioForm.value.ultimoNome;
+      dadosFormulario.phoneNumber = this.usuarioForm.value.phoneNumber;
+      dadosFormulario.password = this.usuarioForm.value.password;
     }
+
+    if (this.usuarioUpdate) {
+      dadosFormulario.username = this.usuarioForm.value.username;
+      dadosFormulario.email = this.usuarioForm.value.email;
+      dadosFormulario.primeiroNome = this.usuarioForm.value.primeiroNome;
+      dadosFormulario.ultimoNome = this.usuarioForm.value.ultimoNome;
+      dadosFormulario.phoneNumber = this.usuarioForm.value.phoneNumber;
+      dadosFormulario.password = this.usuarioForm.value.password;
+      dadosFormulario.imagemUrl = this.usuarioForm.value.imagemUrl;
+      dadosFormulario.funcao = this.usuarioForm.value.funcao;
+    }
+
+    // ----------------------------------
 
     if (this.coletaImagem) {
       dadosFormulario.imagemUrl = typeof this.url ==="undefined"? "" :this.url;
-    }
-
-    if (this.coletaPhoneNumber) {
-      dadosFormulario.phoneNumber = this.usuarioForm.value.phoneNumber;
     }
 
     if (this.coletaFuncao) {

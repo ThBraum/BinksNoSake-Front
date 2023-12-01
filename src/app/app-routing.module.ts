@@ -4,6 +4,7 @@ import { HomeComponent } from './components/pages/home/home.component';
 import { PirataResolver } from './resolvers/pirata.resolver';
 import { PirataListaComponent } from './components/pages/piratas/pirata-lista/pirata-lista.component';
 import { LoginComponent } from './components/pages/core/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -20,8 +21,9 @@ const routes: Routes = [
   {
     path: 'pirata',
     component: PirataListaComponent,
+    canActivate: [AuthGuard],
     resolve: {
-      pirata: PirataResolver // responsável por carregar os dados do pirata antes de carregar a página
+      pirata: PirataResolver
     }
   },
   {

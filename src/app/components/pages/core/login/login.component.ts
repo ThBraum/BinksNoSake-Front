@@ -38,9 +38,10 @@ export class LoginComponent {
       password: this.loginForm.value.password,
     };
     this.usuarioService.login(user).subscribe({
-      next: (response) => {
-        this.snackBarService.showMessage('Login realizado com sucesso!', false);
-        this.router.navigate(['/home']);
+      next: () => {
+        this.router.navigateByUrl('/pirata').then(() => {
+          this.usuarioService.emitLoginEvent();
+        });
       },
       error: (error) => {
         this.snackBarService.showMessage('Email e/ou Senha incorreto(s)', true);

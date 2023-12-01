@@ -23,6 +23,9 @@ export class UsuarioService {
     );
   public currentUser$ = this.currentUserSource.asObservable();
 
+  private loginEventSource = new BehaviorSubject<Usuario | null>(null);
+  loginEvent = this.loginEventSource.asObservable();
+
   private _tokenAtual: string | null = null;
   public get tokenAtual(): string | null {
     return this._tokenAtual;
@@ -37,17 +40,31 @@ export class UsuarioService {
   }
 
   login(model: any): Observable<any> {
-    console.log("localStorage: ", localStorage);
-    console.log("currentUserSource: ", this.currentUserSource);
-    console.log("currentUserSource.value: ", this.currentUserSource.value);
-    console.log("_tokenAtual: ", this._tokenAtual);
-    console.log("reautenticateTimeoutId: ", this.reautenticateTimeoutId);
+    return this.http.post<Usuario>(`${this.apiAccountUrl}/login`, model).pipe(
+      tap((user: Usuario) => {
+        this.setCurrentUser(user);
+        this.emitLoginEvent();
+      })
+    );
+  }
 
-    return this.http.post<void>(`${this.apiAccountUrl}/login`, model);
+  emitLoginEvent(): void {
+    const currentUser = this.currentUserSource.value;
+    this.loginEventSource.next(currentUser);
   }
 
   getUser(): Observable<UsuarioUpdate> {
     return this.http.get<UsuarioUpdate>(this.apiAccountUrl + 'getUser').pipe(take(1));
+  }
+
+  setUser(user: Usuario | null): void {
+    this.currentUserSource.next(user);
+  }
+
+  setCurrentUser(user: Usuario): void {
+    localStorage.setItem('usuario', JSON.stringify(user));
+    this.currentUserSource.next(user);
+    this.emitLoginEvent();
   }
 
   register(model: any): Observable<void> {
@@ -74,22 +91,11 @@ export class UsuarioService {
   }
 
   logout(): void {
-    console.log("localStorage: ", localStorage);
-    console.log("currentUserSource: ", this.currentUserSource);
-    console.log("currentUserSource.value: ", this.currentUserSource.value);
-    console.log("_tokenAtual: ", this._tokenAtual);
-    console.log("reautenticateTimeoutId: ", this.reautenticateTimeoutId);
-
     localStorage.removeItem('usuario');
     this.currentUserSource.next(null);
-    // localStorage.removeItem('token');
-    // this._tokenAtual = null;
     this.currentUserSource.complete();
-  }
-
-  setCurrentUser(user: Usuario): void {
-    localStorage.setItem('usuario', JSON.stringify(user));
-    this.currentUserSource.next(user);
+    this.emitLoginEvent();
+    window.location.reload();
   }
 
 }

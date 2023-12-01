@@ -1,63 +1,98 @@
 <header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient">
-    <div class="container-fluid">
+  <nav class="d-none d-md-block"> <!-- desktop -->
+    <div class="d-flex bg-dark bg-gradient justify-content-between">
       <a routerLink="/home">
         <img src="../../../assets/Chopper.png" alt="logo" width="50" height="50" class="d-inline-block align-text-top">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-1">
-          <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" routerLink="/pirata">Piratas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" routerLink="/capitao">Capitães</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" routerLink="/navio">Navios</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-white" aria-current="page" routerLink="/timoneiro">Timoneiros</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <div *ngIf="usuario; else loginLink">
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Conta
+      <mat-tab-group>
+        <mat-tab label="Piratas">
+          <a class="nav-link text-white" aria-current="page" routerLink="/pirata"></a>
+        </mat-tab>
+        <mat-tab label="Capitães" disabled>
+          <a class="nav-link text-white" aria-current="page" routerLink="/capitao"></a>
+        </mat-tab>
+        <mat-tab label="Navios" disabled>
+          <a class="nav-link text-white" aria-current="page" routerLink="/navio"></a>
+        </mat-tab>
+        <mat-tab label="Timoneiros" disabled>
+          <a class="nav-link text-white" aria-current="page" routerLink="/timoneiro"></a>
+        </mat-tab>
+      </mat-tab-group>
+      <div class="d-flex justify-content-center align-items-center list-unstyled">
+        <div *ngIf="!usuario">
+          <button mat-raised-button routerLink="/login">Entrar</button>
+        </div>
+        <div *ngIf="usuario?.funcao === 'Administrador'">
+          <button mat-raised-button [matMenuTriggerFor]="conteudos">Gerenciamento</button>
+          <mat-menu #conteudos="matMenu">
+            <ng-container *ngIf="usuario?.funcao === 'Administrador'">
+              <button mat-menu-item routerLink="/admin/users">
+                <mat-icon color="primary">people</mat-icon>Gerenciar Usuários
               </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <!-- Adicione aqui as opções de controle de conta -->
-                <a class="dropdown-item" routerLink="/perfil">Perfil</a>
-                <a class="dropdown-item" (click)="logout()">Sair</a>
-              </div>
-            </div>
-          </div>
-          <ng-template #loginLink>
-            <button mat-raised-button type="button" routerLink="/login">Entrar</button>
-          </ng-template>
-        </form>
+            </ng-container>
+          </mat-menu>
+        </div>
+        <div *ngIf="usuario">
+          <button mat-raised-button [matMenuTriggerFor]="perfil">Conta</button>
+          <mat-menu #perfil="matMenu">
+            <button mat-menu-item routerLink="/user/profile-update" disabled><mat-icon
+                color="primary">account_circle</mat-icon>Atualizar perfil</button>
+            <button mat-menu-item routerLink="/user/change-password" disabled><mat-icon color="primary">lock</mat-icon>Trocar
+              senha</button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon color="primary">exit_to_app</mat-icon>
+              Sair
+            </button>
+          </mat-menu>
+        </div>
       </div>
     </div>
   </nav>
+
+  <nav class="d-md-none d-flex flex-column"> <!-- mobile -->
+    <div class="bg-dark bg-gradient">
+      <div class="d-flex justify-content-between">
+        <a routerLink="/home">
+          <img src="../../../assets/Chopper.png" alt="logo" width="50" height="50"
+            class="d-inline-block align-text-top mt-2 ms-2">
+        </a>
+        <div *ngIf="!usuario" class="d-inline-block align-text-top mt-3 me-2">
+          <button mat-raised-button routerLink="/login">Entrar</button>
+        </div>
+        <div *ngIf="usuario" class="list-unstyled ms-auto mt-2">
+          <button mat-icon-button class="mx-1 ms-auto text-white"
+            [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+          <mat-menu #menu="matMenu" class="mt-4">
+            <ng-container *ngIf="usuario?.funcao === 'Administrador'">
+              <button mat-menu-item routerLink="/admin/users" disabled>
+                <mat-icon color="primary">people</mat-icon>Gerenciar Usuários
+              </button>
+            </ng-container>
+            <button mat-menu-item routerLink="/user/profile-update" disabled><mat-icon
+                color="primary">account_circle</mat-icon>Atualizar perfil</button>
+            <button mat-menu-item routerLink="/user/change-password" disabled><mat-icon color="primary">lock</mat-icon>Trocar
+              senha</button>
+            <button mat-menu-item (click)="logout()">
+              <mat-icon color="primary">exit_to_app</mat-icon>
+              Sair
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <ul class="d-flex justify-content-around list-unstyled mt-2">
+        <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page" routerLink="/pirata">Piratas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page">Capitães</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page">Navios</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page">Timoneiros</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </header>
-<!-- <li class="nav-item">
-            <a class="nav-link text-white" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled text-white" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-          </li> -->

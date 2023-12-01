@@ -14,9 +14,6 @@ export class PirataListaComponent implements OnInit, OnDestroy {
   autoplaySubscription?: Subscription;
   dataSubscription?: Subscription;
 
-
-  batata = "";
-
   piratas = new Array<Pirata>();
 
   constructor(
@@ -29,14 +26,12 @@ export class PirataListaComponent implements OnInit, OnDestroy {
     this.dataSubscription = this.router.data.subscribe({
       next: (data) => {
         this.piratas = data['pirata'];
-        this.batata = this.piratas.map(p => p.nome).join(" ");
       },
       error: (error) => {
         console.log(error);
         this.snackBarService.showMessage('Não foi possível carregar os piratas', true);
       }
     });
-    console.log("batata2");
   }
 
   ngOnDestroy(): void {
