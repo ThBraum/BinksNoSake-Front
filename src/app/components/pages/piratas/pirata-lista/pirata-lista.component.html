@@ -1,4 +1,57 @@
-<div *ngFor="let item of piratas" class="background">
-  id: {{item.id}} <br>
-  nome: {{item.nome}} <br>
+<div class="background m-0 d-flex justify-content-center">
+  <div class="col-12 my-3 px-3 position-relative">
+    <div style="overflow: auto; display: grid;">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="imagemURL">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Imagem </th>
+          <td mat-cell *matCellDef="let row">
+            <img class="foto-pirata" title="imagemPirata" [src]="mostrarImagem(row.imagemURL)">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome </th>
+          <td mat-cell *matCellDef="let row">{{row.nome | titlecase}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="capitao">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Capitão</th>
+          <td mat-cell *matCellDef="let row">{{row.capitao.nome}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="funcao">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Função</th>
+          <td mat-cell *matCellDef="let row">{{row.funcao | titlecase}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataIngressoTripulacao">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Ingresso</th>
+          <td mat-cell *matCellDef="let row">{{row.dataIngressoTripulacao | titlecase}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="objetivo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Objetivo</th>
+          <td mat-cell *matCellDef="let row">{{row.objetivo}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
+          <td mat-cell *matCellDef="let row">
+            <button title="Atualizar informações" mat-icon-button color="primary" routerLink='/admin/users/{{row.id}}/update'>
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button title="Criar nova senha" mat-icon-button color="primary" routerLink='/admin/users/{{row.id}}/change-password'>
+              <mat-icon>password</mat-icon>
+            </button>
+            <button title="Excluir conta" mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      </table>
+    </div>
+  </div>
 </div>

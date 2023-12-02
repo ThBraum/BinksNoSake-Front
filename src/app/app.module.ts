@@ -1,18 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -30,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PirataDetalhesComponent } from './components/pages/piratas/pirata-detalhes/pirata-detalhes.component';
 import { PirataListaComponent } from './components/pages/piratas/pirata-lista/pirata-lista.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { UsuarioFormComponent } from './modules/shared/components/usuario-form/usuario-form.component';
+import { SharedModule } from './modules/shared/shared.module';
 
 function tokenGetter() {
   return localStorage.getItem('token');
@@ -45,26 +33,14 @@ function tokenGetter() {
     RegisterComponent,
     PirataListaComponent,
     PirataDetalhesComponent,
-    UsuarioFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule,
     HttpClientModule,
-    MatSnackBarModule,
     FontAwesomeModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatTabsModule,
-    MatSidenavModule,
+    SharedModule,
     JwtModule.forRoot({ config: { tokenGetter } }),
   ],
   providers: [

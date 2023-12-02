@@ -1,3 +1,4 @@
+import { Capitao } from "../capitao/Capitao";
 import { Navio } from "../navio/Navio";
 
 export interface Pirata {
@@ -5,8 +6,9 @@ export interface Pirata {
   nome: string;
   funcao: string;
   dataIngressoTripulacao: Date;
+  imagemURL: string;
   objetivo: string;
   capitaoId: string;
-  capitao: string;
+  capitao: Capitao;
   navios: Navio[];
 }

@@ -6,16 +6,16 @@
       </a>
       <mat-tab-group>
         <mat-tab label="Piratas">
-          <a class="nav-link text-white" aria-current="page" routerLink="/pirata"></a>
+          <a class="nav-link text-white" aria-current="page" routerLink="/pirata">Piratas</a>
         </mat-tab>
         <mat-tab label="Capitães" disabled>
-          <a class="nav-link text-white" aria-current="page" routerLink="/capitao"></a>
+          <a class="nav-link text-white" aria-current="page"></a>
         </mat-tab>
         <mat-tab label="Navios" disabled>
-          <a class="nav-link text-white" aria-current="page" routerLink="/navio"></a>
+          <a class="nav-link text-white" aria-current="page"></a>
         </mat-tab>
         <mat-tab label="Timoneiros" disabled>
-          <a class="nav-link text-white" aria-current="page" routerLink="/timoneiro"></a>
+          <a class="nav-link text-white" aria-current="page"></a>
         </mat-tab>
       </mat-tab-group>
       <div class="d-flex justify-content-center align-items-center list-unstyled">
@@ -35,7 +35,7 @@
         <div *ngIf="usuario">
           <button mat-raised-button [matMenuTriggerFor]="perfil">Conta</button>
           <mat-menu #perfil="matMenu">
-            <button mat-menu-item routerLink="/user/profile-update" disabled><mat-icon
+            <button mat-menu-item routerLink="/user/profile-update"><mat-icon
                 color="primary">account_circle</mat-icon>Atualizar perfil</button>
             <button mat-menu-item routerLink="/user/change-password" disabled><mat-icon color="primary">lock</mat-icon>Trocar
               senha</button>
@@ -68,7 +68,7 @@
                 <mat-icon color="primary">people</mat-icon>Gerenciar Usuários
               </button>
             </ng-container>
-            <button mat-menu-item routerLink="/user/profile-update" disabled><mat-icon
+            <button mat-menu-item routerLink="/user/profile-update"><mat-icon
                 color="primary">account_circle</mat-icon>Atualizar perfil</button>
             <button mat-menu-item routerLink="/user/change-password" disabled><mat-icon color="primary">lock</mat-icon>Trocar
               senha</button>
@@ -84,13 +84,13 @@
           <a class="nav-link text-white" aria-current="page" routerLink="/pirata">Piratas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" aria-current="page">Capitães</a>
+          <a class="nav-link text-white" aria-current="page" disabled>Capitães</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" aria-current="page">Navios</a>
+          <a class="nav-link text-white" aria-current="page" disabled>Navios</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" aria-current="page">Timoneiros</a>
+          <a class="nav-link text-white" aria-current="page" disabled>Timoneiros</a>
         </li>
       </ul>
     </div>

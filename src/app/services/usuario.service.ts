@@ -53,8 +53,8 @@ export class UsuarioService {
     this.loginEventSource.next(currentUser);
   }
 
-  getUser(): Observable<UsuarioUpdate> {
-    return this.http.get<UsuarioUpdate>(this.apiAccountUrl + 'getUser').pipe(take(1));
+  getUser(): Observable<Usuario> {
+    return this.http.get<Usuario>(this.apiAccountUrl + '/getUser').pipe(take(1));
   }
 
   setUser(user: Usuario | null): void {
@@ -68,7 +68,7 @@ export class UsuarioService {
   }
 
   register(model: any): Observable<void> {
-    return this.http.post<Usuario>(this.apiAccountUrl + 'register', model).pipe(
+    return this.http.post<Usuario>(this.apiAccountUrl + '/register', model).pipe(
       take(1),
       map((response: Usuario) => {
         const user = response;
@@ -79,8 +79,8 @@ export class UsuarioService {
     );
   }
 
-  updateuser(model: UsuarioUpdate): Observable<any> {
-    return this.http.put<any>(this.apiAccountUrl + 'updateuser', model).pipe(take(1),
+  updateUser(model: UsuarioUpdate): Observable<any> {
+    return this.http.put<any>(this.apiAccountUrl + '/updateuser', model).pipe(take(1),
       map((response: Usuario) => {
         const user = response;
         if (user) {

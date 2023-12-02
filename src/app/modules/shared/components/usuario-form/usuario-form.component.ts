@@ -28,42 +28,40 @@ export class UsuarioFormComponent {
   hidePasswordConfirmation = true;
   url: any = '';
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.usuarioForm = this.fb.group({
       id: [{ value: this.dadosUsuario?.id, disabled: false }],
       username: [
         { value: this.dadosUsuario?.username, disabled: false },
-        this.usuarioLogin ? [Validators.required] : [],
+        this.usuarioLogin || this.usuarioCreate || this.usuarioUpdate ? [Validators.required] : [],
       ],
       primeiroNome: [
         { value: this.dadosUsuario?.primeiroNome, disabled: false },
-        this.usuarioCreate ? [Validators.required] : [],
+        this.usuarioCreate || this.usuarioUpdate ? [Validators.required] : [],
       ],
       ultimoNome: [
         { value: this.dadosUsuario?.ultimoNome, disabled: false },
-        this.usuarioCreate ? [Validators.required] : [],
+        this.usuarioCreate || this.usuarioUpdate ? [Validators.required] : [],
       ],
       email: [
         { value: this.dadosUsuario?.email, disabled: false },
-        this.usuarioCreate ? [Validators.email, Validators.required] : [],
+        this.usuarioCreate || this.usuarioUpdate ? [Validators.email, Validators.required] : [],
       ],
       phoneNumber: [
         { value: this.dadosUsuario?.phoneNumber, disabled: false },
-        this.usuarioCreate ? [Validators.required] : [],
       ],
       funcao: [
         { value: this.dadosUsuario?.funcao, disabled: false },
-        this.usuarioUpdate ? [Validators.required] : [],
       ],
       password: [
         { value: this.dadosUsuario?.password, disabled: false },
-        this.coletaSenha ? [Validators.required, Validators.minLength(6)] : [],
+        this.coletaSenha || this.usuarioCreate ? [Validators.required, Validators.minLength(6)] : [],
       ],
       confirmarSenha: [
         { value: null, disabled: false },
-        this.coletaSenha
+        this.coletaSenha || this.usuarioCreate
           ? [Validators.required, Validators.minLength(6), this.validarSenha]
           : [],
       ],
@@ -75,16 +73,7 @@ export class UsuarioFormComponent {
   }
 
   submit(): void {
-    const dadosFormulario: Usuario = {
-      id: '',
-      primeiroNome: '',
-      ultimoNome: '',
-      username: '',
-      email: '',
-      phoneNumber: '',
-      password: '',
-      imagemUrl: '',
-    };
+    const dadosFormulario = {} as Usuario;
 
     if (this.usuarioForm.value.id) {
       dadosFormulario.id = this.usuarioForm.value.id;
@@ -118,7 +107,7 @@ export class UsuarioFormComponent {
     // ----------------------------------
 
     if (this.coletaImagem) {
-      dadosFormulario.imagemUrl = typeof this.url ==="undefined"? "" :this.url;
+      dadosFormulario.imagemUrl = typeof this.url === "undefined" ? "" : this.url;
     }
 
     if (this.coletaFuncao) {
@@ -153,7 +142,7 @@ export class UsuarioFormComponent {
     }
   }
 
-  public delete(){
+  public delete() {
     this.url = undefined;
   }
 }

@@ -7,7 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
-import { AppModule } from 'src/app/app.module';
+import { UserRoutingModule } from './user-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,10 +17,11 @@ import { AppModule } from 'src/app/app.module';
   ],
   imports: [
     CommonModule,
-    AppModule,
     MatCardModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    UserRoutingModule,
+    SharedModule,
   ]
 })
 export class UserModule { }

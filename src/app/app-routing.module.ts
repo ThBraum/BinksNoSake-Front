@@ -5,6 +5,8 @@ import { PirataResolver } from './resolvers/pirata.resolver';
 import { PirataListaComponent } from './components/pages/piratas/pirata-lista/pirata-lista.component';
 import { LoginComponent } from './components/pages/core/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
+import { PirataDetalhesComponent } from './components/pages/piratas/pirata-detalhes/pirata-detalhes.component';
+import { UsuarioResolver } from './resolvers/usuario.resolver';
 
 const routes: Routes = [
   {
@@ -16,15 +18,22 @@ const routes: Routes = [
     path: 'user',
     loadChildren: () =>
       import('./modules/user/user.module').then(m => m.UserModule),
+    resolve: {
+      usuario: UsuarioResolver,
+    }
     // canMatch: []
   },
   {
     path: 'pirata',
     component: PirataListaComponent,
-    canActivate: [AuthGuard],
+    redirectTo: 'piratas/lista',
     resolve: {
       pirata: PirataResolver
-    }
+    },
+    children: [
+      { path: 'pirata-datalhes', component: PirataDetalhesComponent },
+    ],
+    pathMatch: 'full'
   },
   {
     path: 'admin/users',

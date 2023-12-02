@@ -17,7 +17,7 @@
       </mat-form-field>
     </div>
   </div>
-  <div class="row mb-2 mb-md-0" *ngIf="usuarioCreate">
+  <div class="row mb-2 mb-md-0" *ngIf="usuarioCreate || usuarioUpdate">
     <div class="col-md">
       <div class="col-12">
         <mat-form-field class="w-100 no-space-hint">
@@ -37,13 +37,37 @@
           <input title="ultimoNome" matInput formControlName="ultimoNome" name="ultimoNome">
         </mat-form-field>
       </div>
-      <div class="col-12">
+    </div>
+    <div class="col-12 col-md-auto order-first order-md-last" *ngIf="usuarioUpdate">
+      <div class="col-12 position-relative" *ngIf="coletaImagem">
+        <label class="hoverable m-auto m-md-0" for="fileInput">
+          <img title="image" [src]="url ? url : './../../../assets/default-avatar.svg'">
+          <div class="hover-text" style="overflow-wrap: break-word;">Alterar imagem</div>
+          <div class="background"></div>
+        </label>
+        <input id="fileInput" #fileInput formControlName="imagemUrl" type='file' accept="image/*"
+            (change)="onSelectFile($event)">
+          <button mat-icon-button color="primary" *ngIf="url" (click)="delete()" type="button"
+            class="position-absolute top-0 end-0" style="margin: -12px -12px 0 0;">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <div class="text-center">
+            <button mat-raised-button color="primary" type="button" (click)="fileInput.click()" class="col-auto my-2">
+              Alterar imagem
+            </button>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="mb-2 mb-md-0" >
+    <div class="row col-md">
+      <div class="col-6">
         <mat-form-field class="w-100 no-space-hint">
           <mat-label>Email</mat-label>
           <input title="email" matInput name="email" formControlName="email">
         </mat-form-field>
       </div>
-      <div class="col-12">
+      <div class="col-6">
         <mat-form-field class="w-100 no-space-hint">
           <mat-label>Phone Number</mat-label>
           <input placeholder="(00) 00000-0000" title="phoneNumber" matInput name="phoneNumber"
@@ -51,41 +75,15 @@
         </mat-form-field>
       </div>
     </div>
-    <div *ngIf="usuarioUpdate">
-      <div class="col-12 col-md-auto order-first order-md-last">
-        <div class="col-12 position-relative">
-          <mat-form-field *ngIf="coletaImagem">
-            <label class="hoverable m-auto m-md-0" for="fileInput">
-              <img title="image" [src]="url ? url : './../../../assets/default-avatar.svg'">
-              <div class="hover-text" style="overflow-wrap: break-word;">Alterar imagem</div>
-              <div class="background"></div>
-            </label>
-            <input id="fileInput" #fileInput formControlName="imagemUrl" type='file' accept="image/*"
-              (change)="onSelectFile($event)">
-            <button mat-icon-button color="primary" *ngIf="url" (click)="delete()" type="button"
-              class="position-absolute top-0 end-0" style="margin: -12px -12px 0 0;">
-              <mat-icon>delete</mat-icon>
-            </button>
-            <div class="text-center">
-              <button mat-raised-button color="primary" type="button" (click)="fileInput.click()" class="col-auto my-2">
-                Alterar imagem
-              </button>
-            </div>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12 col-lg-12">
-          <mat-form-field *ngIf="coletaFuncao" class="w-100">
-            <mat-label>Cargo</mat-label>
-            <mat-select formControlName="cargo" placeholder="Nível de acesso as funções do site">
-              <mat-option *ngFor="let item of funcao" [value]="item">
-                {{ item | titlecase }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
+    <div class="col-12" *ngIf="usuarioUpdate">
+      <mat-form-field class="w-100">
+        <mat-label>Função</mat-label>
+        <mat-select formControlName="funcao" placeholder="Nível de acesso as funções do site">
+          <mat-option *ngFor="let item of funcao" [value]="item">
+            {{ item | titlecase }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
   </div>
   <div class="row">
@@ -105,7 +103,8 @@
     <div class="col-12">
       <mat-form-field *ngIf="coletaSenha" class="w-100 pb-4 pb-sm-2">
         <mat-label>Confirmar senha</mat-label>
-        <input title="confirm-password" matInput [type]="hidePasswordConfirmation ? 'password' : 'text'" formControlName="confirmarSenha">
+        <input title="confirm-password" matInput [type]="hidePasswordConfirmation ? 'password' : 'text'"
+          formControlName="confirmarSenha">
         <button mat-icon-button matSuffix (click)="hidePasswordConfirmation = !hidePasswordConfirmation" type="button">
           <mat-icon>{{hidePasswordConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
