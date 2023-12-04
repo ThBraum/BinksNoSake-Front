@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../interfaces/usuario/usuario';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, ReplaySubject, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { UsuarioUpdate } from '../interfaces/usuario/usuarioUpdate';
 import { catchError, map, take, tap } from 'rxjs/operators';
+import { RefreshTokens } from '../interfaces/usuario/refreshTokens';
+import { SnackBarService } from './snack-bar.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
   private apiAccountUrl = environment.apiAccountUrl;
+  private apiAcessoUrl = environment.apiAcessoUrl;
 
   private currentUserSource: BehaviorSubject<Usuario | null> =
     new BehaviorSubject<Usuario | null>(
@@ -36,15 +39,23 @@ export class UsuarioService {
   constructor(
     private http: HttpClient,
     private readonly jwtHelperService: JwtHelperService,
-    private readonly router: Router) {
+    private readonly router: Router,
+    private snackBarService: SnackBarService) {
+    const token = localStorage.getItem('token');
+    this._tokenAtual = token;
   }
 
   login(model: any): Observable<any> {
-    return this.http.post<Usuario>(`${this.apiAccountUrl}/login`, model).pipe(
-      tap((user: Usuario) => {
-        this.setCurrentUser(user);
-        this.emitLoginEvent();
-      })
+    return this.http.post<Usuario>(`${this.apiAcessoUrl}/login`, model).pipe(
+      take(1),
+      map((response: Usuario) => {
+        const user = response;
+        if (user) {
+          this.setCurrentUser(user),
+          this.atualizarTokenAtual(user.token!);
+          this.emitLoginEvent();
+        }
+      }),
     );
   }
 
@@ -93,9 +104,42 @@ export class UsuarioService {
   logout(): void {
     localStorage.removeItem('usuario');
     this.currentUserSource.next(null);
+
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    this._tokenAtual = null;
+
+    clearTimeout(this.reautenticateTimeoutId);
+
     this.currentUserSource.complete();
     this.emitLoginEvent();
     window.location.reload();
+
+    this.router.navigateByUrl('/home');
   }
 
+  refreshToken(): Observable<any> {
+    return this.http.post<any>(this.apiAcessoUrl + '/refreshToken', null).pipe(
+      take(1),
+      catchError(error => {
+        this.logout();
+        this.snackBarService.showMessage("Erro ao validar usuário. Faça login novamente para continuar.", true);
+        return throwError(() => error);
+      }),
+      map((response) => {
+        if (response && response.token) {
+          this.atualizarTokenAtual(response.token);
+          this.snackBarService.showMessage("Repita sua última ação.", false);
+          return response;
+        }
+      })
+    );
+  }
+
+  atualizarTokenAtual(token: string) {
+    if (token) {
+      localStorage.setItem('token', token);
+      this._tokenAtual = token;
+    }
+  }
 }

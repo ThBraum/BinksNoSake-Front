@@ -4,20 +4,21 @@
       <a routerLink="/home">
         <img src="../../../assets/Chopper.png" alt="logo" width="50" height="50" class="d-inline-block align-text-top">
       </a>
-      <mat-tab-group>
-        <mat-tab label="Piratas">
-          <a class="nav-link text-white" aria-current="page" routerLink="/pirata">Piratas</a>
-        </mat-tab>
-        <mat-tab label="Capitães" disabled>
-          <a class="nav-link text-white" aria-current="page"></a>
-        </mat-tab>
-        <mat-tab label="Navios" disabled>
-          <a class="nav-link text-white" aria-current="page"></a>
-        </mat-tab>
-        <mat-tab label="Timoneiros" disabled>
-          <a class="nav-link text-white" aria-current="page"></a>
-        </mat-tab>
-      </mat-tab-group>
+      <nav mat-tab-nav-bar [tabPanel]="tabPanel">
+        <a mat-tab-link class="text-white" routerLink="/pirata" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+          Piratas
+        </a>
+        <a mat-tab-link class="text-white" routerLink="/capitao" routerLinkActive #rla="routerLinkActive" disabled [active]="rla.isActive">
+          Capitães
+        </a>
+        <a mat-tab-link class="text-white" routerLink="/navio" routerLinkActive #rla="routerLinkActive" disabled [active]="rla.isActive">
+          Navios
+        </a>
+        <a mat-tab-link class="text-white" routerLink="/timoneiro" routerLinkActive #rla="routerLinkActive" disabled [active]="rla.isActive">
+          Timoneiros
+        </a>
+      </nav>
+      <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
       <div class="d-flex justify-content-center align-items-center list-unstyled">
         <div *ngIf="!usuario">
           <button mat-raised-button routerLink="/login">Entrar</button>

@@ -24,11 +24,11 @@ export class LoginComponent {
   loginForm: UntypedFormGroup = this.fb.group({
     username: [
       { value: null, disabled: false },
-      [ Validators.required ]
+      [Validators.required]
     ],
     password: [
       { value: null, disabled: false },
-      [ Validators.required, Validators.minLength(6) ]
+      [Validators.required, Validators.minLength(6)]
     ],
   });
 
@@ -44,8 +44,12 @@ export class LoginComponent {
         });
       },
       error: (error) => {
-        this.snackBarService.showMessage('Email e/ou Senha incorreto(s)', true);
-        this.recuperarSenha = true;
+        if (error.status === 401) {
+          this.snackBarService.showMessage('Usuário e/ou Senha incorreto(s)', true);
+          this.recuperarSenha = true;
+        } else {
+          this.snackBarService.showMessage(error.error, true);
+        }
       }
     }).add(() => (this.spinner = false));
     this.spinner = true;

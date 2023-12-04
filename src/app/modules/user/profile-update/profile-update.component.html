@@ -15,7 +15,8 @@
         [usuarioUpdate]="true"
         [coletaPhoneNumber]="true"
         [coletaImagem]="true"
-        [coletaSenha]="false">
+        [coletaSenha]="false"
+        (notificarSubmitForm)="profileUpdate($event)">
         </app-usuario-form>
       </mat-card-content>
     </mat-card>

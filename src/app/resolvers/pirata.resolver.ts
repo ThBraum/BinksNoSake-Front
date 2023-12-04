@@ -20,9 +20,7 @@ export const PirataResolver: ResolveFn<Pirata> = (
   const snackBarService = inject(SnackBarService);
   // const id = route.paramMap.get('id')!;
 
-  return pirataService.getPiratas().pipe(tap((e) => {
-    console.log(e);
-  }),
+  return pirataService.getPiratas().pipe(
     catchError((error) => {
       snackBarService.showMessage('Não foi possível carregar os piratas', true);
       // router.navigateByUrl('/home');

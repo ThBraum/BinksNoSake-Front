@@ -1,7 +1,7 @@
 import { Funcao } from "src/app/enums/funcao";
 
 export interface Usuario { //User
-  id: string;
+  id: number;
   username: string;
   email: string;
   primeiroNome: string;
@@ -11,4 +11,5 @@ export interface Usuario { //User
   funcao?: Funcao;
   password: string;
   token?: string;
+  refreshToken?: string;
 }

@@ -26,7 +26,7 @@ export class RegisterComponent {
     this.usuarioService.register(newAccount).subscribe({
       next: (response) => {
         this.snackBarService.showMessage('Conta criada com sucesso!', false);
-        this.router.navigate(['/login']);
+        this.router.navigateByUrl('/login');
       },
       error: (error) => {
         this.snackBarService.showMessage('Erro ao criar conta', true);

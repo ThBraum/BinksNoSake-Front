@@ -20,13 +20,12 @@ const routes: Routes = [
       import('./modules/user/user.module').then(m => m.UserModule),
     resolve: {
       usuario: UsuarioResolver,
-    }
-    // canMatch: []
+    },
+    canMatch: [AuthGuard]
   },
   {
     path: 'pirata',
     component: PirataListaComponent,
-    redirectTo: 'piratas/lista',
     resolve: {
       pirata: PirataResolver
     },
@@ -34,6 +33,9 @@ const routes: Routes = [
       { path: 'pirata-datalhes', component: PirataDetalhesComponent },
     ],
     pathMatch: 'full'
+  },
+  {
+    path: 'pirata', redirectTo: 'pirata/pirata-lista', pathMatch: 'full'
   },
   {
     path: 'admin/users',
