@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/pages/home/home.component';
-import { PirataResolver } from './resolvers/pirata.resolver';
-import { PirataListaComponent } from './components/pages/piratas/pirata-lista/pirata-lista.component';
 import { LoginComponent } from './components/pages/core/login/login.component';
 import { AuthGuard } from './guards/auth.guard';
-import { PirataDetalhesComponent } from './components/pages/piratas/pirata-detalhes/pirata-detalhes.component';
+import { PirataDetalhesComponent } from './components/piratas/pirata-detalhes/pirata-detalhes.component';
 import { UsuarioResolver } from './resolvers/usuario.resolver';
+import { PirataListaComponent } from './components/piratas/pirata-lista/pirata-lista.component';
+import { pirataListaResolver } from './resolvers/pirata-lista.resolver';
 
 const routes: Routes = [
   {
@@ -27,7 +27,7 @@ const routes: Routes = [
     path: 'pirata',
     component: PirataListaComponent,
     resolve: {
-      pirata: PirataResolver
+      pirata: pirataListaResolver,
     },
     children: [
       { path: 'pirata-datalhes', component: PirataDetalhesComponent },

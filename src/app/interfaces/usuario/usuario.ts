@@ -7,7 +7,7 @@ export interface Usuario { //User
   primeiroNome: string;
   ultimoNome: string;
   phoneNumber?: string;
-  imagemUrl: string;
+  imagemURL: string;
   funcao?: Funcao;
   password: string;
   token?: string;

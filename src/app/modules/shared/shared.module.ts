@@ -16,6 +16,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatSidenavModule,
     MatTableModule,
     MatSortModule,
+    MatPaginatorModule,
   ],
   exports: [
     UsuarioFormComponent,
@@ -55,6 +57,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatSidenavModule,
     MatTableModule,
     MatSortModule,
+    MatPaginatorModule,
   ]
 })
 export class SharedModule { }

@@ -2,7 +2,7 @@
   <nav class="d-none d-md-block"> <!-- desktop -->
     <div class="d-flex bg-dark bg-gradient justify-content-between">
       <a routerLink="/home">
-        <img src="../../../assets/Chopper.png" alt="logo" width="50" height="50" class="d-inline-block align-text-top">
+        <img src="../../../assets/Chopper.png" alt="logo" width="50" height="50" class="d-inline-block align-text-top ms-2">
       </a>
       <nav mat-tab-nav-bar [tabPanel]="tabPanel">
         <a mat-tab-link class="text-white" routerLink="/pirata" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
@@ -19,7 +19,7 @@
         </a>
       </nav>
       <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
-      <div class="d-flex justify-content-center align-items-center list-unstyled">
+      <div class="d-flex justify-content-center align-items-center list-unstyled me-2">
         <div *ngIf="!usuario">
           <button mat-raised-button routerLink="/login">Entrar</button>
         </div>

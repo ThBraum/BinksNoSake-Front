@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Usuario } from 'src/app/interfaces/usuario/usuario';
+import { PirataService } from 'src/app/services/pirata.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 
@@ -19,7 +20,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private readonly router: Router,
     private readonly usuarioService: UsuarioService,
-    private readonly snackBarService: SnackBarService) { }
+    private readonly snackBarService: SnackBarService,
+    private readonly pirataService: PirataService) { }
 
   ngOnInit(): void {
     this.routerSubscription = this.router.events.subscribe((event) => {

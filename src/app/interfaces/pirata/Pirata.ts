@@ -1,14 +1,14 @@
-import { Capitao } from "../capitao/Capitao";
-import { Navio } from "../navio/Navio";
+import { Capitao } from "../capitao/capitao";
+import { Navio } from "../navio/navio";
 
 export interface Pirata {
   id: number;
   nome: string;
   funcao: string;
   dataIngressoTripulacao: Date;
-  imagemURL: string;
   objetivo: string;
-  capitaoId: string;
+  imagemURL: string;
+  capitaoId: number;
   capitao: Capitao;
   navios: Navio[];
 }

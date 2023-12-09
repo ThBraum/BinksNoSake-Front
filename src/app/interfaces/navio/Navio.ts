@@ -1,4 +1,4 @@
-import { Pirata } from "../pirata/Pirata";
+import { Pirata } from "../pirata/pirata";
 
 export interface Navio {
   id: number;

@@ -1,4 +1,4 @@
-import { Capitao } from "../capitao/Capitao";
+import { Capitao } from "../capitao/capitao";
 
 export interface Timoneiro {
   id: number;

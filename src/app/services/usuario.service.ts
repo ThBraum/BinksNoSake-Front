@@ -101,7 +101,7 @@ export class UsuarioService {
     )
   }
 
-  logout(): void {
+  logout(navegadorHome:  boolean = true): void {
     localStorage.removeItem('usuario');
     this.currentUserSource.next(null);
 
@@ -115,7 +115,7 @@ export class UsuarioService {
     this.emitLoginEvent();
     window.location.reload();
 
-    this.router.navigateByUrl('/home');
+    if (navegadorHome) this.router.navigateByUrl('/home');
   }
 
   refreshToken(): Observable<any> {
@@ -141,5 +141,10 @@ export class UsuarioService {
       localStorage.setItem('token', token);
       this._tokenAtual = token;
     }
+  }
+
+  private notificarAtualizacaoUsuarioAtual(usuario: Usuario) {
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+    this.currentUserSource.next(usuario);
   }
 }

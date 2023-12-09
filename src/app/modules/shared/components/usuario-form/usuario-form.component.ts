@@ -66,7 +66,7 @@ export class UsuarioFormComponent {
           : [],
       ],
       imagemUrl: [
-        { value: this.dadosUsuario?.imagemUrl, disabled: false },
+        { value: this.dadosUsuario?.imagemURL, disabled: false },
         this.usuarioUpdate ? [] : [],
       ]
     });
@@ -100,14 +100,14 @@ export class UsuarioFormComponent {
       dadosFormulario.ultimoNome = this.usuarioForm.value.ultimoNome;
       dadosFormulario.phoneNumber = this.usuarioForm.value.phoneNumber;
       dadosFormulario.password = this.usuarioForm.value.password;
-      dadosFormulario.imagemUrl = this.usuarioForm.value.imagemUrl;
+      dadosFormulario.imagemURL = this.usuarioForm.value.imagemUrl;
       dadosFormulario.funcao = this.usuarioForm.value.funcao;
     }
 
     // ----------------------------------
 
     if (this.coletaImagem) {
-      dadosFormulario.imagemUrl = typeof this.url === "undefined" ? "" : this.url;
+      dadosFormulario.imagemURL = typeof this.url === "undefined" ? "" : this.url;
     }
 
     if (this.coletaFuncao) {
