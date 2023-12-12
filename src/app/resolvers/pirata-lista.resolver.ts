@@ -21,8 +21,8 @@ export const pirataListaResolver: ResolveFn<PiratasResult> = (
   const snackBarService = inject(SnackBarService);
 
   const searchFilter: FiltroBuscaPiratas = {
-    PageNumber: +(route.queryParamMap.get('PageNumber') ?? 1),
-    PageSize: +(route.queryParamMap.get('PageSize') ?? 5),
+    pageNumber: +(route.queryParamMap.get('PageNumber') ?? 1),
+    pageSize: +(route.queryParamMap.get('PageSize') ?? 5),
 
     term: route.queryParamMap.get('Term') ?? undefined,
   };

@@ -17,10 +17,10 @@
     </div>
 
     <div [ngClass]="{'d-none d-md-block': !showMobileFilter}" class="py-2 py-md-0">
-      <form class="row w-100 m-0" [formGroup]="filterForm" (ngSubmit)="applyFilter()">
+      <form class="row w-100 m-0" [formGroup]="filterForm">
         <mat-form-field class="col-12 col-md-8 mt-3 px-3 no-space-hint" appearance="outline">
-          <mat-label>Pesquisar por:</mat-label>
-          <input title="pesquisar" matInput formControlName="search">
+          <mat-label>Pesquisar por nome ou função:</mat-label>
+          <input title="pesquisar" matInput formControlName="search" (keyup)="onKeyUp($event)">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
         <mat-form-field class="col-12 col-md-4 mt-3 px-3 no-space-hint" appearance="outline">
@@ -31,10 +31,6 @@
             <mat-option *ngFor="let item of pageSizeValues" [value]=item>{{item}}</mat-option>
           </mat-select>
         </mat-form-field>
-        <div class="col-12 col-md-3 mt-1 px-3 align-self-center me-auto">
-          <button class="w-100" mat-raised-button color="primary" [disabled]="!filterForm.valid"
-            type="submit">Filtrar</button>
-        </div>
       </form>
     </div>
 
@@ -43,7 +39,7 @@
         <table mat-table [dataSource]="dataSource" matSort>
 
           <ng-container matColumnDef="imagemURL">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Imagem </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td mat-cell *matCellDef="let row">
               <img class="foto-pirata" title="imagemPirata" [src]="mostrarImagem(row.imagemURL)">
             </td>
@@ -98,9 +94,9 @@
       <mat-paginator #paginator
       [length]="piratasPaginado.totalItems"
       [pageSize]="piratasPaginado.pageSize"
-      [pageIndex]="piratasPaginado.currentPage"
+      [pageIndex]="piratasPaginado.pageNumber"
       [pageSizeOptions]="pageSizeValues"
-      showFirstLastButtons="true"
+      showFirstLastButtons="false"
       hidePageSize="true"
       (page)="handlePageEvent($event)"
       aria-label="Select page">

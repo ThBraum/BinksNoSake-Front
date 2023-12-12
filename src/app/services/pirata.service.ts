@@ -20,8 +20,8 @@ export class PirataService {
 
   getPiratas(filtro: FiltroBuscaPiratas): Observable<PiratasPaginado> {
     let params = new HttpParams()
-      .set('PageNumber', filtro.PageNumber.toString())
-      .set('PageSize', filtro.PageSize.toString());
+      .set('PageNumber', filtro.pageNumber.toString())
+      .set('PageSize', filtro.pageSize.toString());
     if (filtro.term) params = params.set('Term', filtro.term);
 
     return this.http.get<Pirata[]>(`${this.apiPirataUrl}`, { observe: 'response',  params }).pipe(

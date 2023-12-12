@@ -5,6 +5,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
 import { Pagination } from 'src/app/interfaces/pagination';
 import { FiltroBuscaPiratas } from 'src/app/interfaces/pirata/filtro-busca-piratas';
 import { Pirata } from 'src/app/interfaces/pirata/pirata';
@@ -46,16 +47,18 @@ export class PirataListaComponent implements OnInit, OnDestroy {
   filterForm!: FormGroup;
   showMobileFilter = false;
   loading = false;
-  pageSizeValues = [1, 5, 10, 25, 50];
+  pageSizeValues = [5, 10, 25, 50];
 
   displayedColumns: string[] = ['imagemURL', 'nome', 'funcao', 'capitao', 'dataIngressoTripulacao', 'objetivo'];
   dataSource: MatTableDataSource<Pirata> = new MatTableDataSource<Pirata>();
 
   piratas: Pirata[] = [];
 
-  piratasPaginado!: PiratasPaginado | any;
+  piratasPaginado!: PiratasPaginado;
   filter!: FiltroBuscaPiratas;
 
+  searchSubject = new Subject<string>();
+  destroy$ = new Subject<void>();
 
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -82,15 +85,65 @@ export class PirataListaComponent implements OnInit, OnDestroy {
 
     this.filterForm = this.fb.group({
       search: [{ value: this.filter.term ?? '', disabled: false }],
-      pageSize: [{ value: this.filter.PageSize, disabled: false }],
+      pageSize: [{ value: this.filter.pageSize, disabled: false }],
     });
-    console.log(this.filterForm.value);
-    console.log("this.piratasPaginado.totalItems: ", this.piratasPaginado.totalItems);
-    console.log("this.piratasPaginado.totalPages: ", this.piratasPaginado.totalPages);
+
+    this.filterForm.get('search')?.valueChanges.pipe(
+      takeUntil(this.destroy$),
+      debounceTime(1000),
+      distinctUntilChanged(),
+      switchMap((value) => {
+        this.filter.term = value === '' ? undefined : value;
+        this.filter.pageNumber = 1;
+        return this.pirataService.getPiratas(this.filter);
+      })
+    ).subscribe({
+      next: (piratasPaginado) => {
+        this.setData(piratasPaginado);
+        this.router.navigate(['/pirata'], {
+          queryParams: {
+            PageNumber: this.filter.pageNumber,
+            PageSize: this.filter.pageSize,
+            Term: this.filter.term,
+          },
+          replaceUrl: true,
+        });
+      },
+      error: (error) => {
+        this.snackBarService.showMessage(error.error, true);
+      },
+    });
+
+    this.filterForm.get('pageSize')?.valueChanges.pipe(
+      takeUntil(this.destroy$),
+      distinctUntilChanged(),
+      switchMap((value) => {
+        this.filter.pageSize = value;
+        this.filter.pageNumber = 1;
+        return this.pirataService.getPiratas(this.filter);
+      })
+    ).subscribe({
+      next: (piratasPaginado) => {
+        this.setData(piratasPaginado);
+        this.router.navigate(['/pirata'], {
+          queryParams: {
+            PageNumber: this.filter.pageNumber,
+            PageSize: this.filter.pageSize,
+            Term: this.filter.term,
+          },
+          replaceUrl: true,
+        });
+      },
+      error: (error) => {
+        this.snackBarService.showMessage(error.error, true);
+      },
+    });
   }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   mostrarImagem(imagemURL: string): string {
@@ -100,31 +153,28 @@ export class PirataListaComponent implements OnInit, OnDestroy {
     return `${environment.apiURL}/resources/images/${imagemURL}`
   }
 
-  applyFilter(): void {
-    this.filter.PageNumber = 1;
-    const search = this.filterForm.value.search;
-
-    this.filter.PageSize = this.filterForm.value.pageSize;
-    this.filter.term = search === '' ? undefined : search;
-
-    this.loadPiratas();
-  }
-
   handlePageEvent(event: PageEvent): void {
-    this.filter.PageNumber = event.pageIndex + 1;
+    this.filter.pageNumber = event.pageIndex + 1;
     this.loadPiratas();
   }
 
-  private loadPiratas() {
+  onKeyUp(event: KeyboardEvent): void {
+    this.searchSubject.next((event.target as HTMLInputElement).value);
+  }
+
+  private loadPiratas(filter = this.filter, timer = 0) {
     this.loading = true;
-    this.pirataService.getPiratas(this.filter).subscribe({
+    this.pirataService.getPiratas(filter).pipe(
+      debounceTime(timer),
+    ).subscribe({
       next: (piratasPaginado) => {
-        console.log("piratasPaginado: ", piratasPaginado);
+        console.log("veio aqui: ", filter);
+        console.log("timer: ", timer);
         this.setData(piratasPaginado);
         this.router.navigate(['/pirata'], {
           queryParams: {
-            PageNumber: this.filter.PageNumber,
-            PageSize: this.filter.PageSize,
+            PageNumber: this.filter.pageNumber,
+            PageSize: this.filter.pageSize,
             Term: this.filter.term,
           },
           replaceUrl: true,
@@ -137,10 +187,8 @@ export class PirataListaComponent implements OnInit, OnDestroy {
   }
 
   private setData(piratasPaginado: PiratasPaginado) {
-    console.log("piratasPaginado: ", piratasPaginado);
     this.piratasPaginado = piratasPaginado;
-    this.piratasPaginado.currentPage -= 1;
-    console.log("this.piratasPaginado: ", this.piratasPaginado);
+    this.piratasPaginado.pageNumber -= 1;
     this.dataSource = new MatTableDataSource(this.piratasPaginado.piratas);
   }
 }
