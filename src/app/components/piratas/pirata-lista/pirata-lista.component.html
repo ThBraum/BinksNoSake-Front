@@ -62,7 +62,7 @@
 
           <ng-container matColumnDef="dataIngressoTripulacao">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Data Ingresso</th>
-            <td mat-cell *matCellDef="let row">{{row.dataIngressoTripulacao | titlecase}}</td>
+            <td mat-cell *matCellDef="let row">{{row.dataIngressoTripulacao | date:"dd/MM/YYYY HH:mm"}}</td>
           </ng-container>
 
           <ng-container matColumnDef="objetivo">
