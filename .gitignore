@@ -30,6 +30,7 @@ yarn-error.log
 
 # Miscellaneous
 /.angular/cache
+/.angular/*
 .sass-cache/
 /connect.lock
 /coverage
@@ -40,3 +41,31 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Environments
+.env
+env/
+*.env
+.env.*
+.src/clientId.ts
+src/clientId.ts
+
+# Packages
+package-lock.json
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Firebase
+.firebase
+.firebase/*
+!firebase.json
+firebase.json
+!firestore.indexes.json
+!firestore.rules
+dist/*

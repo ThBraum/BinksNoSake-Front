@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../interfaces/usuario/usuario';
-import { BehaviorSubject, ReplaySubject, throwError } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, Subject, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -59,6 +59,21 @@ export class UsuarioService {
     );
   }
 
+  loginWithGoogle(credentials: string): Observable<any> {
+    const header = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<any>(`${this.apiAcessoUrl}/LoginWithGoogle`, JSON.stringify(credentials), { headers: header }).pipe(
+      take(1),
+      map((response: any) => {
+        const user = response;
+        if (user) {
+          this.setCurrentUser(user),
+            this.atualizarTokenAtual(user.token!);
+          this.emitLoginEvent();
+        }
+      }),
+    );
+  }
+
   emitLoginEvent(): void {
     const currentUser = this.currentUserSource.value;
     this.loginEventSource.next(currentUser);
@@ -101,7 +116,7 @@ export class UsuarioService {
     )
   }
 
-  logout(navegadorHome:  boolean = true): void {
+  logout(navegadorHome: boolean = true): void {
     localStorage.removeItem('usuario');
     this.currentUserSource.next(null);
 
@@ -115,7 +130,7 @@ export class UsuarioService {
     this.emitLoginEvent();
     window.location.reload();
 
-    if (navegadorHome) this.router.navigateByUrl('/home');
+    if (navegadorHome) this.router.navigateByUrl('/pirata');
   }
 
   refreshToken(): Observable<any> {

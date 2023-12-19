@@ -43,7 +43,7 @@ const routes: Routes = [
       import('./modules/user-management-adm/user-management-adm.module').then(m => m.UserManagementAdmModule),
     // canMatch: []
   },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'pirata', pathMatch: 'full' },
 ];
 
 @NgModule({

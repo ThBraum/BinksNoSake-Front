@@ -1,0 +1,35 @@
+.mdc-card__actions {
+  min-height: 20px;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  margin: 1px 0;
+  margin-top: 10px;
+  margin-bottom: auto;
+  color: white;
+}
+
+.separator-text {
+  font-size: 80%;
+  margin: 0 10px;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.parentElement {
+  width: 100%;
+}
+
+#buttonDiv {
+  margin: 0 auto;
+  width: auto;
+}
