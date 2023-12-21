@@ -10,6 +10,9 @@ import { UsuarioUpdate } from '../interfaces/usuario/usuarioUpdate';
 import { catchError, map, take, tap } from 'rxjs/operators';
 import { RefreshTokens } from '../interfaces/usuario/refreshTokens';
 import { SnackBarService } from './snack-bar.service';
+import * as auth from 'firebase/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { GoogleAuthProvider } from '@firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +43,8 @@ export class UsuarioService {
     private http: HttpClient,
     private readonly jwtHelperService: JwtHelperService,
     private readonly router: Router,
-    private snackBarService: SnackBarService) {
+    private snackBarService: SnackBarService,
+    private afAuth: AngularFireAuth,) {
     const token = localStorage.getItem('token');
     this._tokenAtual = token;
   }
@@ -52,23 +56,43 @@ export class UsuarioService {
         const user = response;
         if (user) {
           this.setCurrentUser(user),
-          this.atualizarTokenAtual(user.token!);
+            this.atualizarTokenAtual(user.token!);
           this.emitLoginEvent();
+          this.snackBarService.showMessage("Login efetuado com sucesso!", false);
         }
       }),
     );
   }
 
-  loginWithGoogle(credentials: string): Observable<any> {
-    const header = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post<any>(`${this.apiAcessoUrl}/LoginWithGoogle`, JSON.stringify(credentials), { headers: header }).pipe(
+  googleAuth() {
+    return this.authLogin(new auth.GoogleAuthProvider()).then((result: any) => {
+      this.exchangeFirebaseTokenForApiToken(result.user).subscribe((response: any) => {
+      })
+    });
+  }
+
+  authLogin(provider: any) {
+    return this.afAuth.signInWithPopup(provider).then((result) => {
+      return result;
+    }).catch((error) => {
+      console.log("error authlogin: ", error)
+    });
+  }
+
+  exchangeFirebaseTokenForApiToken(firebaseToken: any): Observable<any> {
+    var firebaseToken = firebaseToken ? firebaseToken._delegate.accessToken : null;
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<any>(`${this.apiAcessoUrl}/LoginWithGoogle`, { firebaseToken: JSON.stringify(firebaseToken) }, { headers }).pipe(
       take(1),
       map((response: any) => {
         const user = response;
         if (user) {
           this.setCurrentUser(user),
-            this.atualizarTokenAtual(user.token!);
+          this.atualizarTokenAtual(user.token!);
           this.emitLoginEvent();
+          this.snackBarService.showMessage("Login efetuado com sucesso!", false);
+          this.router.navigateByUrl('/pirata');
         }
       }),
     );

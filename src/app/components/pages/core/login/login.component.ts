@@ -5,7 +5,12 @@ import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { clientId } from 'src/app/clientId';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
+
+const googleLogoURL =
+"https://raw.githubusercontent.com/fireflysemantics/logo/master/Google.svg";
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,14 +21,18 @@ export class LoginComponent implements OnInit {
     private readonly router: Router,
     private readonly usuarioService: UsuarioService,
     private readonly snackBarService: SnackBarService,
+    private readonly matIconRegistry: MatIconRegistry,
+    private readonly domSanitizer: DomSanitizer,
     private fb: FormBuilder,
-  ) { }
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      "logo",
+      this.domSanitizer.bypassSecurityTrustResourceUrl(googleLogoURL)
+    )
+   }
 
 
   ngOnInit(): void {
-    document.addEventListener('DOMContentLoaded', () => {
-      this.loadGoogleLibrary();
-    });
   }
 
   hide: boolean = true;
@@ -64,60 +73,23 @@ export class LoginComponent implements OnInit {
     this.spinner = true;
   }
 
-  loadGoogleLibrary() {
-    const script = document.createElement('script');
-    script.onload = () => {
-      this.initializeGoogleButton();
-    };
-    script.src = 'https://accounts.google.com/gsi/client';
-    document.head.appendChild(script);
+  loginWithGoogle() {
+    this.usuarioService.googleAuth();
   }
 
-  initializeGoogleButton() {
-    // @ts-ignore
-    google.accounts.id.initialize({
-      client_id: clientId.google,
-      callback: this.handleCredentialResponse.bind(this),
-      auto_select: true,
-      cancel_on_tap_outside: false,
-    });
-    // @ts-ignore
-    google.accounts.id.renderButton(
-      // @ts-ignore
-      document.getElementById('buttonDiv'),
-      {
-        theme: 'filled_black',
-        size: 'large',
-        type: 'standard',
-        shape: 'circle',
-        text: 'signin_with',
-        width: document.getElementById('parentElement')?.offsetWidth,
-        logo_alignment: 'left',
-      }
-    );
-    // @ts-ignore
-    google.accounts.id.prompt((notification: PromptMomentNotification) => {
-      if (notification.isNotDisplayed()) {
-        document.cookie = `g_state=;path=/;expires=Thu, 01 Jan 1970 00:00:01 GMT;`;
-        // @ts-ignore
-        google.accounts.id.prompt();
-      }
-     });
-  }
-
-  async handleCredentialResponse(response: CredentialResponse) {
-    await this.usuarioService.loginWithGoogle(response.credential).subscribe({
-      next: () => {
-        this.router.navigateByUrl('/pirata').then(() => {
-          this.usuarioService.emitLoginEvent();
-        });
-      },
-      error: (error) => {
-        this.recuperarSenha = true;
-        this.snackBarService.showMessage(error.error, true);
-      }
-    }).add(() => (this.spinner = false));
-    this.spinner = true;
-  }
+  // async handleCredentialResponse(response: CredentialResponse) {
+  //   await this.usuarioService.loginWithGoogle(response.credential).subscribe({
+  //     next: () => {
+  //       this.router.navigateByUrl('/pirata').then(() => {
+  //         this.usuarioService.emitLoginEvent();
+  //       });
+  //     },
+  //     error: (error) => {
+  //       this.recuperarSenha = true;
+  //       this.snackBarService.showMessage(error.error, true);
+  //     }
+  //   }).add(() => (this.spinner = false));
+  //   this.spinner = true;
+  // }
 }
 

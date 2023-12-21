@@ -75,7 +75,7 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="col-12" *ngIf="usuarioUpdate">
+    <div class="col-12" *ngIf="usuarioUpdate && dadosUsuario?.funcao === 'Administrador'">
       <mat-form-field class="w-100">
         <mat-label>Função</mat-label>
         <mat-select formControlName="funcao" placeholder="Nível de acesso as funções do site">

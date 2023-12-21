@@ -19,6 +19,9 @@ import { PirataDetalhesComponent } from './components/piratas/pirata-detalhes/pi
 import { PirataListaComponent } from './components/piratas/pirata-lista/pirata-lista.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from './modules/shared/shared.module';
+import { AngularFireModule } from '@angular/fire/compat';
+import { environment } from 'src/environments/environment';
+import { FormsModule } from '@angular/forms';
 
 function tokenGetter() {
   return localStorage.getItem('token');
@@ -41,6 +44,8 @@ function tokenGetter() {
     HttpClientModule,
     FontAwesomeModule,
     SharedModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    FormsModule,
     JwtModule.forRoot({ config: { tokenGetter } }),
   ],
   providers: [

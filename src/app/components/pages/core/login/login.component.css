@@ -10,11 +10,11 @@
   margin: 1px 0;
   margin-top: 10px;
   margin-bottom: auto;
-  color: white;
+  color: rgba(255, 255, 255, 0.74);
 }
 
 .separator-text {
-  font-size: 80%;
+  font-size: 90%;
   margin: 0 10px;
 }
 
@@ -22,14 +22,33 @@
 .separator::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid #ffffffd5;
 }
 
-.parentElement {
-  width: 100%;
+.google-login-button {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  background-color: white;
+  color: black;
+  padding: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-#buttonDiv {
-  margin: 0 auto;
-  width: auto;
+.google-login-button:hover {
+  background-color: #cccccc;
+}
+
+.google-icon {
+  width: 18px;
+  height: 28px;
+  margin-right: 10px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+.google-login-button span {
+  vertical-align: middle;
 }

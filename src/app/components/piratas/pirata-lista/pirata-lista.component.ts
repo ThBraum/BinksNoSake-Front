@@ -168,8 +168,6 @@ export class PirataListaComponent implements OnInit, OnDestroy {
       debounceTime(timer),
     ).subscribe({
       next: (piratasPaginado) => {
-        console.log("veio aqui: ", filter);
-        console.log("timer: ", timer);
         this.setData(piratasPaginado);
         this.router.navigate(['/pirata'], {
           queryParams: {
