@@ -41,11 +41,11 @@
     <div class="col-12 col-md-auto order-first order-md-last" *ngIf="usuarioUpdate">
       <div class="col-12 position-relative" *ngIf="coletaImagem">
         <label class="hoverable m-auto m-md-0" for="fileInput">
-          <img title="image" [src]="url ? url : './../../../assets/default-avatar.svg'">
+          <img title="image" [src]="url">
           <div class="hover-text" style="overflow-wrap: break-word;">Alterar imagem</div>
           <div class="background"></div>
         </label>
-        <input id="fileInput" #fileInput formControlName="imagemUrl" type='file' accept="image/*"
+        <input id="fileInput" #fileInput type='file' accept="image/*"
             (change)="onSelectFile($event)">
           <button mat-icon-button color="primary" *ngIf="url" (click)="delete()" type="button"
             class="position-absolute top-0 end-0" style="margin: -12px -12px 0 0;">
@@ -79,7 +79,7 @@
       <mat-form-field class="w-100">
         <mat-label>Função</mat-label>
         <mat-select formControlName="funcao" placeholder="Nível de acesso as funções do site">
-          <mat-option *ngFor="let item of funcao" [value]="item">
+          <mat-option *ngFor="let item of funcao" [value]="item" disabled="true">
             {{ item | titlecase }}
           </mat-option>
         </mat-select>

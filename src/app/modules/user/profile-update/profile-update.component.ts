@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Usuario } from 'src/app/interfaces/usuario/usuario';
@@ -38,16 +39,15 @@ export class ProfileUpdateComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  profileUpdate(usuario: UsuarioUpdate): void {
-    console.log("profile update: ", usuario);
-    // this.usuarioService.updateUser(usuario).subscribe({
-    //   next: (usuario: UsuarioUpdate) => {
-    //     this.usuario = {...this.usuario, ...usuario};
-    //   },
-    //   error: (err) => {
-    //     console.log(err);
-    //   },
-    // });
+  profileUpdate(formData: FormData): void {
+    this.usuarioService.updateUser(formData).subscribe({
+      next: (usuario: UsuarioUpdate) => {
+        this.snackBarService.showMessage("Perfil atualizado com sucesso.");
+        this.router.navigateByUrl('/pirata');
+      },
+      error: (err) => {
+        this.snackBarService.showMessage("Erro ao atualizar perfil.", true);
+      },
+    })
   }
-
 }

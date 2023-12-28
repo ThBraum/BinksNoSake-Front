@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Funcao } from 'src/app/enums/funcao';
 import { Usuario } from 'src/app/interfaces/usuario/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-usuario-form',
@@ -19,23 +21,27 @@ export class UsuarioFormComponent {
   @Input() coletaSenha: boolean = true;
   @Input() coletaPhoneNumber: boolean = true;
 
-  @Output() notificarSubmitForm: EventEmitter<Usuario> =
+  @Output() notificarSubmitForm: EventEmitter<FormData> =
     new EventEmitter();
 
   usuarioForm!: FormGroup;
   funcao = Object.values(Funcao);
   hidePassword = true;
   hidePasswordConfirmation = true;
-  url: any = '';
+  image: File | null = null;
+  url: string | ArrayBuffer | null | undefined = '';
+  // file: File[] = [];
+  usuario!: Usuario;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private readonly usuarioService: UsuarioService) { }
 
   ngOnInit(): void {
     this.usuarioForm = this.fb.group({
       id: [{ value: this.dadosUsuario?.id, disabled: false }],
       username: [
         { value: this.dadosUsuario?.username, disabled: false },
-        this.usuarioLogin || this.usuarioCreate || this.usuarioUpdate ? [Validators.required] : [],
       ],
       primeiroNome: [
         { value: this.dadosUsuario?.primeiroNome, disabled: false },
@@ -65,11 +71,8 @@ export class UsuarioFormComponent {
           ? [Validators.required, Validators.minLength(6), this.validarSenha]
           : [],
       ],
-      imagemUrl: [
-        { value: this.dadosUsuario?.imagemURL, disabled: false },
-        this.usuarioUpdate ? [] : [],
-      ]
     });
+    this.mostrarImagem(this.dadosUsuario?.imagemURL);
   }
 
   submit(): void {
@@ -99,16 +102,11 @@ export class UsuarioFormComponent {
       dadosFormulario.primeiroNome = this.usuarioForm.value.primeiroNome;
       dadosFormulario.ultimoNome = this.usuarioForm.value.ultimoNome;
       dadosFormulario.phoneNumber = this.usuarioForm.value.phoneNumber;
-      dadosFormulario.password = this.usuarioForm.value.password;
-      dadosFormulario.imagemURL = this.usuarioForm.value.imagemUrl;
       dadosFormulario.funcao = this.usuarioForm.value.funcao;
     }
 
     // ----------------------------------
 
-    if (this.coletaImagem) {
-      dadosFormulario.imagemURL = typeof this.url === "undefined" ? "" : this.url;
-    }
 
     if (this.coletaFuncao) {
       dadosFormulario.funcao = this.usuarioForm.value.funcao;
@@ -118,7 +116,7 @@ export class UsuarioFormComponent {
       dadosFormulario.password = this.usuarioForm.value.password;
     }
 
-    this.notificarSubmitForm.emit(dadosFormulario);
+    this.notificarSubmitForm.emit(this.generateFormData(dadosFormulario));
   }
 
   validarSenha(confirmarSenhaControl: AbstractControl) {
@@ -130,19 +128,45 @@ export class UsuarioFormComponent {
     }
   }
 
+  generateFormData(data: Usuario): FormData {
+    const formData = new FormData();
+
+    for (let [key, val] of Object.entries(data)) {
+      formData.append(key, val);
+    }
+
+    if (this.image !== null) {
+      const fileToUpload = this.image as File;
+      formData.append('imagemUrl', fileToUpload);
+    }
+
+    return formData;
+  }
+
   onSelectFile(event?: any): void {
     if (event?.target && event.target.files && event.target.files[0]) {
-      var reader = new FileReader();
+      var render = new FileReader();
 
-      reader.readAsDataURL(event.target.files[0]);
-
-      reader.onload = (event) => {
+      render.onload = (event) => {
         this.url = event.target?.result;
       }
+
+      this.image = event.target.files[0];
+      render.readAsDataURL(event.target.files[0]);
+
+    }
+  }
+
+  mostrarImagem(imagemURL: string | undefined): void {
+    if (imagemURL === null || imagemURL === '' || imagemURL === 'string' || imagemURL === undefined) {
+      this.url = './../../../../../assets/default-avatar.svg';
+    } else {
+      this.url = `${environment.apiURL}/resources/images/${imagemURL}`;
     }
   }
 
   public delete() {
-    this.url = undefined;
+    this.image = null;
+    this.mostrarImagem(undefined);
   }
 }

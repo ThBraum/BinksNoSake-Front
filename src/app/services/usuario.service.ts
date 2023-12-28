@@ -58,7 +58,7 @@ export class UsuarioService {
           this.setCurrentUser(user),
             this.atualizarTokenAtual(user.token!);
           this.emitLoginEvent();
-          this.snackBarService.showMessage("Login efetuado com sucesso!", false);
+          this.snackBarService.showMessage("Login efetuado com sucesso!", false, 1500);
         }
       }),
     );
@@ -89,9 +89,9 @@ export class UsuarioService {
         const user = response;
         if (user) {
           this.setCurrentUser(user),
-          this.atualizarTokenAtual(user.token!);
+            this.atualizarTokenAtual(user.token!);
           this.emitLoginEvent();
-          this.snackBarService.showMessage("Login efetuado com sucesso!", false);
+          this.snackBarService.showMessage("Login efetuado com sucesso!", false, 1500);
           this.router.navigateByUrl('/pirata');
         }
       }),
@@ -129,15 +129,16 @@ export class UsuarioService {
     );
   }
 
-  updateUser(model: UsuarioUpdate): Observable<any> {
-    return this.http.put<any>(this.apiAccountUrl + '/updateuser', model).pipe(take(1),
+  updateUser(userData: FormData): Observable<any> {
+    return this.http.put<any>(this.apiAccountUrl + '/update', userData).pipe(
+      take(1),
       map((response: Usuario) => {
         const user = response;
         if (user) {
           this.setCurrentUser(user)
         }
       })
-    )
+    );
   }
 
   logout(navegadorHome: boolean = true): void {

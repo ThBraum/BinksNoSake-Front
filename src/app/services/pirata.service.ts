@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Pirata } from '../interfaces/pirata/pirata';
 import { PiratasPaginado } from '../interfaces/pirata/piratasPaginado';
 import { SnackBarService } from './snack-bar.service';
-import { FiltroBuscaPiratas } from '../interfaces/pirata/filtro-busca-piratas';
+import { FiltroBusca } from '../interfaces/filtro-busca';
 import { Pagination } from '../interfaces/pagination';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class PirataService {
     private readonly http: HttpClient,
     private readonly snackBarService: SnackBarService) { }
 
-  getPiratas(filtro: FiltroBuscaPiratas): Observable<PiratasPaginado> {
+  getPiratas(filtro: FiltroBusca): Observable<PiratasPaginado> {
     let params = new HttpParams()
       .set('PageNumber', filtro.pageNumber.toString())
       .set('PageSize', filtro.pageSize.toString());

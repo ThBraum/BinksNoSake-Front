@@ -24,9 +24,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly pirataService: PirataService) { }
 
   ngOnInit(): void {
-    this.routerSubscription = this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.usuario = JSON.parse(localStorage.getItem('usuario')!);
+    this.subscription = this.usuarioService.currentUser$.subscribe({
+      next: (usuario: Usuario | null) => {
+        this.usuario = usuario;
       }
     });
   }

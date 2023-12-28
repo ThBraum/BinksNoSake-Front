@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,6 +46,7 @@ function tokenGetter() {
     SharedModule,
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
+    MatTooltipModule,
     JwtModule.forRoot({ config: { tokenGetter } }),
   ],
   providers: [

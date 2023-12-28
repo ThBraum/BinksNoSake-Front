@@ -39,3 +39,7 @@
   max-height: 150px;
   aspect-ratio: 4/3;
 }
+
+.nowrap {
+  white-space: nowrap;
+}

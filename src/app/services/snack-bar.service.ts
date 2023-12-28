@@ -9,9 +9,9 @@ export class SnackBarService {
 
   constructor(private _snackBar: MatSnackBar) { }
 
-  showMessage(msg: string, isError: boolean = false): void {
+  showMessage(msg: string, isError: boolean = false, duration: number = 5000): void {
     this._snackBar.open(msg, 'X', {
-      duration: 5000,
+      duration: duration,
       horizontalPosition: "right",
       verticalPosition: "top",
       panelClass: isError ? ['msg-error'] : ['msg-success'],

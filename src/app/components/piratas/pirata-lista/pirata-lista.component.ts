@@ -1,19 +1,21 @@
-import { ChangeDetectorRef, Component, Injectable, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator, MatPaginatorIntl, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, takeUntil } from 'rxjs/operators';
 import { Pagination } from 'src/app/interfaces/pagination';
-import { FiltroBuscaPiratas } from 'src/app/interfaces/pirata/filtro-busca-piratas';
-import { Pirata } from 'src/app/interfaces/pirata/pirata';
+import { FiltroBusca } from 'src/app/interfaces/filtro-busca';
 import { PiratasResult } from 'src/app/interfaces/pirata/piratas-result';
 import { PiratasPaginado } from 'src/app/interfaces/pirata/piratasPaginado';
 import { PirataService } from 'src/app/services/pirata.service';
 import { SnackBarService } from 'src/app/services/snack-bar.service';
 import { environment } from 'src/environments/environment';
+import { Pirata } from 'src/app/interfaces/pirata/pirata';
+import { Usuario } from 'src/app/interfaces/usuario/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Injectable()
 export class MyCustomPaginatorIntl implements MatPaginatorIntl {
@@ -49,13 +51,14 @@ export class PirataListaComponent implements OnInit, OnDestroy {
   loading = false;
   pageSizeValues = [5, 10, 25, 50];
 
-  displayedColumns: string[] = ['imagemURL', 'nome', 'funcao', 'capitao', 'dataIngressoTripulacao', 'objetivo'];
+  displayedColumns: string[] = ['imagemURL', 'nome', 'funcao', 'capitao', 'dataIngressoTripulacao', 'objetivo', 'acoes'];
   dataSource: MatTableDataSource<Pirata> = new MatTableDataSource<Pirata>();
 
   piratas: Pirata[] = [];
+  usuario: Usuario | null = null;
 
   piratasPaginado!: PiratasPaginado;
-  filter!: FiltroBuscaPiratas;
+  filter!: FiltroBusca;
 
   searchSubject = new Subject<string>();
   destroy$ = new Subject<void>();
@@ -71,7 +74,7 @@ export class PirataListaComponent implements OnInit, OnDestroy {
     private readonly pirataService: PirataService,
     private readonly snackBarService: SnackBarService,
     private readonly fb: FormBuilder,
-    private readonly cdRef: ChangeDetectorRef
+    private readonly usuarioService: UsuarioService,
   ) { }
 
   ngOnInit(): void {
@@ -80,6 +83,12 @@ export class PirataListaComponent implements OnInit, OnDestroy {
         const searchResult: PiratasResult = data['pirata'];
         this.filter = searchResult.searchFilter;
         this.setData(searchResult.paginatedPiratas);
+      }
+    });
+
+    this.usuarioService.currentUser$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (usuario) => {
+        this.usuario = usuario;
       }
     });
 
@@ -188,5 +197,13 @@ export class PirataListaComponent implements OnInit, OnDestroy {
     this.piratasPaginado = piratasPaginado;
     this.piratasPaginado.pageNumber -= 1;
     this.dataSource = new MatTableDataSource(this.piratasPaginado.piratas);
+  }
+
+  handleUnauthorized(): void {
+    if (!this.usuario) {
+      this.router.navigateByUrl('/login');
+      return;
+    }
+    if (this.usuario.funcao !== "Administrador") this.snackBarService.showMessage("Você não tem permissão para realizar essa ação.", true, 2000);
   }
 }

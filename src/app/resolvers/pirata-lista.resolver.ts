@@ -10,7 +10,7 @@ import { inject } from '@angular/core';
 import { PirataService } from '../services/pirata.service';
 import { SnackBarService } from '../services/snack-bar.service';
 import { PiratasResult } from '../interfaces/pirata/piratas-result';
-import { FiltroBuscaPiratas } from '../interfaces/pirata/filtro-busca-piratas';
+import { FiltroBusca } from '../interfaces/filtro-busca';
 
 export const pirataListaResolver: ResolveFn<PiratasResult> = (
   route: ActivatedRouteSnapshot,
@@ -20,7 +20,7 @@ export const pirataListaResolver: ResolveFn<PiratasResult> = (
   const pirataService = inject(PirataService);
   const snackBarService = inject(SnackBarService);
 
-  const searchFilter: FiltroBuscaPiratas = {
+  const searchFilter: FiltroBusca = {
     pageNumber: +(route.queryParamMap.get('PageNumber') ?? 1),
     pageSize: +(route.queryParamMap.get('PageSize') ?? 5),
 
