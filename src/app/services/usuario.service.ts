@@ -75,7 +75,7 @@ export class UsuarioService {
     return this.afAuth.signInWithPopup(provider).then((result) => {
       return result;
     }).catch((error) => {
-      console.log("error authlogin: ", error)
+      console.log(error)
     });
   }
 

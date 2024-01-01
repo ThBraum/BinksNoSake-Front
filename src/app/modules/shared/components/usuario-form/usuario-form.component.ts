@@ -52,11 +52,11 @@ export class UsuarioFormComponent {
         this.usuarioCreate || this.usuarioUpdate ? [Validators.required] : [],
       ],
       email: [
-        { value: this.dadosUsuario?.email, disabled: false },
-        this.usuarioCreate || this.usuarioUpdate ? [Validators.email, Validators.required] : [],
+        { value: this.dadosUsuario?.email, disabled: !this.usuarioCreate },
+        this.usuarioCreate ? [Validators.email, Validators.required] : [],
       ],
       phoneNumber: [
-        { value: this.dadosUsuario?.phoneNumber, disabled: false },
+        this.dadosUsuario?.phoneNumber || null
       ],
       funcao: [
         { value: this.dadosUsuario?.funcao, disabled: false },
@@ -98,7 +98,7 @@ export class UsuarioFormComponent {
 
     if (this.usuarioUpdate) {
       dadosFormulario.username = this.usuarioForm.value.username;
-      dadosFormulario.email = this.usuarioForm.value.email;
+      // dadosFormulario.email = this.usuarioForm.value.email;
       dadosFormulario.primeiroNome = this.usuarioForm.value.primeiroNome;
       dadosFormulario.ultimoNome = this.usuarioForm.value.ultimoNome;
       dadosFormulario.phoneNumber = this.usuarioForm.value.phoneNumber;
@@ -116,6 +116,7 @@ export class UsuarioFormComponent {
       dadosFormulario.password = this.usuarioForm.value.password;
     }
 
+
     this.notificarSubmitForm.emit(this.generateFormData(dadosFormulario));
   }
 
@@ -132,7 +133,9 @@ export class UsuarioFormComponent {
     const formData = new FormData();
 
     for (let [key, val] of Object.entries(data)) {
-      formData.append(key, val);
+      if (val !== null && val !== undefined && val !== '') {
+        formData.append(key, val);
+      }
     }
 
     if (this.image !== null) {

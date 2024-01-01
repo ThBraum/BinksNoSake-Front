@@ -101,6 +101,9 @@ export class JwtInterceptor implements HttpInterceptor {
       //   this.router.navigateByUrl('/login');
       //   this.snackBarService.showMessage('Sessão expirada, faça login novamente!', true, 5000);
       // }
+      this.usuarioService.logout();
+      this.router.navigateByUrl('/login');
+      this.snackBarService.showMessage('Sessão expirada, faça login novamente!', true, 5000);
       return EMPTY;
     } else {
       // this.ctr = 0;
