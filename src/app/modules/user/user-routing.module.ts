@@ -4,8 +4,14 @@ import { ProfileUpdateComponent } from './profile-update/profile-update.componen
 import { ChangePasswordComponent } from './change-password/change-password.component';
 
 const routes: Routes = [
-  { path: 'change-password', component: ChangePasswordComponent },
-  { path: 'profile-update', component: ProfileUpdateComponent },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent
+  },
+  {
+    path: 'profile-update',
+    component: ProfileUpdateComponent
+  },
 ];
 
 @NgModule({

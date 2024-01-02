@@ -22,12 +22,14 @@ export class UsuarioService {
   private apiAcessoUrl = environment.apiAcessoUrl;
 
   private currentUserSource: BehaviorSubject<Usuario | null> =
-    new BehaviorSubject<Usuario | null>(
-      localStorage.getItem('usuario') != null
-        ? JSON.parse(localStorage.getItem('usuario')!)
-        : null
-    );
+    new BehaviorSubject<Usuario | null>(this.getStoredUser());
+
   public currentUser$ = this.currentUserSource.asObservable();
+
+  private getStoredUser(): Usuario | null {
+    const storedUser = localStorage.getItem('usuario');
+    return storedUser ? JSON.parse(storedUser) : null;
+  }
 
   private loginEventSource = new BehaviorSubject<Usuario | null>(null);
   loginEvent = this.loginEventSource.asObservable();
@@ -137,6 +139,10 @@ export class UsuarioService {
         if (user) {
           this.setCurrentUser(user)
         }
+      }),
+      catchError((error) => {
+        this.snackBarService.showMessage("Erro ao atualizar usuário.", true);
+        return throwError(() => error);
       })
     );
   }

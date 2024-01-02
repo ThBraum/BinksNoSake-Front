@@ -21,7 +21,7 @@ const routes: Routes = [
     resolve: {
       usuario: UsuarioResolver,
     },
-    canMatch: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'pirata',

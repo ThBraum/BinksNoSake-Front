@@ -13,7 +13,7 @@ import { SnackBarService } from '../services/snack-bar.service';
 
 export const UsuarioResolver: ResolveFn<Usuario> = (
   route: ActivatedRouteSnapshot,
-  state
+  state: RouterStateSnapshot
 ) => {
   const router = inject(Router);
   const usuarioService = inject(UsuarioService);
