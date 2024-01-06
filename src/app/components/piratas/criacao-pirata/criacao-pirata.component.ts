@@ -39,7 +39,7 @@ export class CriacaoPirataComponent implements OnInit {
     private dateAdapter: DateAdapter<Date>,
     private readonly snackBarService: SnackBarService,
     private datePipe: DatePipe,
-    private readonly router: Router,
+    private router: Router,
   ) {
     // this.dateAdapter.setLocale('pt-BR');
   }
@@ -104,10 +104,6 @@ export class CriacaoPirataComponent implements OnInit {
       dataCapitao.nome = novoCapitaoNome;
     }
 
-    console.log("dataPirata: ", dataPirata);
-    console.log("dataCapitao: ", dataCapitao);
-    console.log("this.camposCapitao.get('novoCapitao')?.value: ", this.camposCapitao.get('novoCapitao')?.value)
-
     const formData = new FormData();
 
     for (let [key, val] of Object.entries(dataPirata)) {
@@ -116,24 +112,20 @@ export class CriacaoPirataComponent implements OnInit {
       }
       if (val !== null && val !== undefined && val !== '') {
         formData.append(key, val);
-        console.log(`key: ${key}, val: ${val}`);
       }
     }
 
     for (let [key, val] of Object.entries(dataCapitao)) {
       if (val !== null && val !== undefined && val !== '') {
         formData.append(`capitao.${key}`, val.toString());
-        console.log(`capitao.${key}: ${val}`);
       }
     }
 
     if (this.file !== null) {
       const fileToUpload = this.file as File;
       formData.append('imagemUrl', fileToUpload);
-      console.log("fileToUpload: ", fileToUpload);
     }
 
-    console.log("formData: ", formData);
 
     this.addPirata(formData);
 
@@ -141,12 +133,10 @@ export class CriacaoPirataComponent implements OnInit {
   }
 
   addPirata(data: FormData): void {
-    console.log("data: ", data);
     this.pirataService.postPirata(data).subscribe({
       next: (pirata) => {
-        console.log("pirata: ", pirata);
         this.snackBarService.showMessage("Pirata criado com sucesso.", false);
-        this.router.navigate(['/piratas']);
+        this.router.navigate(['/pirata']);
       },
       error: (err) => {
         this.snackBarService.showMessage("Erro ao criar pirata.", true);
@@ -157,17 +147,17 @@ export class CriacaoPirataComponent implements OnInit {
 
 
   adicionarCapitao(): void {
-    const novoCapitao = this.camposCapitao.get('novoCapitao')?.value;
-    this.capitaoService.postCapitao(novoCapitao).subscribe({
+    const novoCapitaoNome = this.camposCapitao.get('novoCapitao')?.value;
+
+    this.capitaoService.postCapitao(novoCapitaoNome).subscribe({
       next: (capitao) => {
         this.snackBarService.showMessage("Capitão criado com sucesso.", false, 1500);
         this.camposCapitao.get('novoCapitao')?.patchValue('');
-        this.camposCapitao.get('capitao')?.patchValue(capitao.nome);
-        this.capitaoService.getCapitaes({ pageNumber: 1, pageSize: 100 }).subscribe({
-          next: (capitaes) => {
-            this.todosCapitaes = capitaes.capitães;
-          }
-        });
+        const capitaoExistente = this.todosCapitaes?.find(c => c.id === capitao.id);
+        if (!capitaoExistente) {
+          this.todosCapitaes?.push(capitao);
+        }
+        this.camposCapitao.get('capitao')?.patchValue(capitao);
       },
       error: (err) => {
         this.snackBarService.showMessage("Erro ao criar capitão.", true);
