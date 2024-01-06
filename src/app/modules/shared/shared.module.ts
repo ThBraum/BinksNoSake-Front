@@ -18,6 +18,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSortModule,
     MatPaginatorModule,
     MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     UsuarioFormComponent,

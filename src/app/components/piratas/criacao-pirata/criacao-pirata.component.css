@@ -1,0 +1,95 @@
+/* telas maiores ou iguais a 768px */
+@media screen and (min-width: 768px) {
+
+  .col-funcao,
+  .col-data {
+    width: 50%; /* col-6 */
+  }
+}
+
+/* telas menores que 768px */
+@media screen and (max-width: 767.98px) {
+  .position-relative {
+    text-align: center;
+  }
+
+  .col-funcao,
+  .col-data {
+    width: 100%; /* col-12 */
+  }
+}
+
+.captain-button {
+  display: flex;
+  align-items: center;
+}
+
+.captain-icon {
+  margin-left: auto;
+  margin-right: 7px;
+  width: 24px;
+  height: 24px;
+}
+
+img {
+  height: 200px;
+  width: auto;
+  aspect-ratio: 4/3;
+  margin-left: -22px;
+  border-radius: 10%;
+}
+
+.hoverable .background {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.37);
+  pointer-events: none;
+  border-radius: 10%;
+  z-index: 1;
+  width: auto;
+  height: 200px;
+  aspect-ratio: 4/3;
+  margin-left: -25px;
+  margin-right: 11px;
+}
+
+.hoverable:hover .hover-text {
+  display: block;
+}
+
+.hoverable:hover .background {
+  display: block;
+}
+
+#fileInput {
+  display: none;
+}
+
+.hoverable {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  width: auto;
+  height: 200px;
+  aspect-ratio: 4/3;
+  margin-left: -22px;
+  border-radius: 10%;
+}
+
+.hoverable .hover-text {
+  position: absolute;
+  display: none;
+  top: 53%;
+  left: 30%;
+  transform: translate(-20%, -40%);
+  z-index: 2;
+}
+
+.hoverable:hover .background {
+  border-radius: 10%;
+  display: block;
+}

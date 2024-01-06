@@ -30,6 +30,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   max-height: max-content;
+  position: relative;
 }
 
 .hyphen {
@@ -37,4 +38,8 @@ body {
   -moz-hyphens: auto;
   -ms-hyphens: auto;
   hyphens: auto;
+}
+
+.mat-vertical-content {
+  padding: 0 24px 24px 12px !important;
 }

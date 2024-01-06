@@ -1,0 +1,124 @@
+<mat-card class="background">
+  <mat-card-title class="text-white ms-3 mb-2 mt-2">Adicionar Pirata</mat-card-title>
+  <mat-card-content>
+    <mat-stepper linear="true" orientation="vertical" #stepper>
+      <mat-step [stepControl]="camposPirata">
+        <ng-template matStepLabel>Informações do Pirata</ng-template>
+        <form [formGroup]="camposPirata">
+          <div class="row mb-2 mb-md-0 mt-3">
+            <div class="col-md">
+              <div class="col-12">
+                <mat-form-field appearance="fill" class="w-100 no-space-hint">
+                  <mat-label>Nome</mat-label>
+                  <input title="nome" matInput placeholder="Ex. Chopper" formControlName="nome" required>
+                </mat-form-field>
+              </div>
+              <div class="row col-md">
+                <div class="col-6 col-funcao">
+                  <mat-form-field appearance="fill" class="w-100 no-space-hint">
+                    <mat-label>Função</mat-label>
+                    <input title="funcao" matInput placeholder="Médico" formControlName="funcao" required>
+                  </mat-form-field>
+                </div>
+                <div class="col-6 col-data">
+                  <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Data Ingresso</mat-label>
+                    <input title="dataIngressoTripulacao" matInput [matDatepicker]="picker" placeholder="dd/MM/yyyy"
+                      formControlName="dataIngressoTripulacao" required>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="col-12">
+                <mat-form-field appearance="fill" class="w-100">
+                  <mat-label>Objetivo</mat-label>
+                  <textarea title="objetivo" matInput formControlName="objetivo"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-12 col-md-auto order-first order-md-last ms-3">
+              <div class="col-12 position-relative">
+                <label class="hoverable m-auto m-md-0 " for="fileInput">
+                  <img title="image" [src]="imagemUrl">
+                  <div class="hover-text" style="overflow-wrap: break-word;">Alterar imagem</div>
+                  <div class="background"></div>
+                </label>
+                <input id="fileInput" #fileInput type='file' accept="image/*" (change)="onSelectFile($event)">
+                <button mat-icon-button color="primary" *ngIf="imagemUrl" (click)="delete()" type="button"
+                  class="position-absolute top-0 end-0" style="margin: -12px -20px 0 0;">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <div class="text-center">
+                  <button mat-raised-button color="primary" type="button" (click)="fileInput.click()"
+                    class="col-auto my-2">
+                    Alterar imagem
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <ng-container *ngIf="!this.camposPirata.valid; else ProximoPasso">
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <div class="d-flex justify-content-start">
+                <div matTooltip="Preencha todos os campos primeiramente" matTooltipPosition="below">
+                  <button mat-raised-button color="primary" matStepperNext size="small"
+                    [disabled]="true">Próximo</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #ProximoPasso>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <div class="d-flex justify-content-start">
+                <button mat-raised-button color="primary" matStepperNext
+                  size="small">Próximo</button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </mat-step>
+      <mat-step [stepControl]="camposCapitao">
+        <ng-template matStepLabel>Informações do Capitão</ng-template>
+        <form [formGroup]="camposCapitao">
+          <div class="row mt-3">
+            <div class="col-md-6">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Capitão Existente</mat-label>
+                <mat-select formControlName="capitao" required>
+                  <mat-option *ngFor="let capitao of todosCapitaes" [value]="capitao">
+                    {{ capitao.nome }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-6">
+              <mat-form-field appearance="fill" class="w-100">
+                <mat-label>Novo Capitão</mat-label>
+                <input title="novoCapitao" matInput formControlName="novoCapitao">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 d-flex justify-content-end mb-3">
+              <button mat-raised-button color="primary" type="button" (click)="adicionarCapitao()" [disabled]="!this.camposCapitao.get('novoCapitao')?.value"
+                class="captain-button">
+                <img src="../../../../assets/pirate-captain.png" class="captain-icon" alt="Icone do Capitao">
+                Adicionar Capitão
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="d-flex justify-content-start mt-3">
+          <button mat-raised-button color="primary" matStepperPrevious>Voltar</button>
+          <button mat-raised-button color="primary" class="ms-2" matStepperNext
+            (click)="validateCapitaes()" [disabled]="!this.camposCapitao.get('capitao')?.value">Salvar</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </mat-card-content>
+</mat-card>

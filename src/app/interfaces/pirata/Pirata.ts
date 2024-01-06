@@ -6,9 +6,9 @@ export interface Pirata {
   nome: string;
   funcao: string;
   dataIngressoTripulacao: Date;
-  objetivo: string;
-  imagemURL: string;
-  capitaoId: number;
-  capitao: Capitao;
-  navios: Navio[];
+  objetivo?: string;
+  imagemURL?: string;
+  capitaoId?: number;
+  capitao?: Capitao;
+  navios?: Navio[];
 }

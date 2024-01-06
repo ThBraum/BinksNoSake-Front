@@ -162,7 +162,9 @@ export class UsuarioFormComponent {
 
   mostrarImagem(imagemURL: string | undefined): void {
     if (imagemURL === null || imagemURL === '' || imagemURL === 'string' || imagemURL === undefined) {
-      this.url = './../../../../../assets/default-avatar.svg';
+      this.url = './../../../../../assets/1063px-New_user_icon-01.svg.svg';
+    } else if (imagemURL.startsWith('http')) {
+      this.url = imagemURL;
     } else {
       this.url = `${environment.apiURL}/resources/images/${imagemURL}`;
     }

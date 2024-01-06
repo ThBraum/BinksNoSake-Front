@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { DatePipe } from '@angular/common';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,8 +36,6 @@ function tokenGetter() {
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    PirataListaComponent,
-    PirataDetalhesComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +47,7 @@ function tokenGetter() {
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
     MatTooltipModule,
+    MatDatepickerModule,
     JwtModule.forRoot({ config: { tokenGetter } }),
   ],
   providers: [

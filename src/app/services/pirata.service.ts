@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, catchError, map, take } from 'rxjs';
+import { EMPTY, Observable, catchError, map, take, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Pirata } from '../interfaces/pirata/pirata';
 import { PiratasPaginado } from '../interfaces/pirata/piratasPaginado';
@@ -39,8 +39,19 @@ export class PirataService {
     return this.http.get<Pirata>(`${this.apiPirataUrl}/${id}`);
   }
 
-  postPirata(pirata: Pirata): Observable<Pirata> {
-    return this.http.post<Pirata>(`${this.apiPirataUrl}`, pirata);
+  postPirata(pirata: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiPirataUrl}`, pirata).pipe(
+      take(1),
+      map((response: any) => {
+        console.log("response: ", response);
+        this.snackBarService.showMessage("Pirata criado com sucesso.");
+        return response;
+      }),
+      catchError((error) => {
+        this.snackBarService.showMessage("Erro ao criar pirata.", true);
+        return throwError(error);
+      })
+    );
   }
 
   putPirata(pirata: Pirata, id: number): Observable<Pirata> {

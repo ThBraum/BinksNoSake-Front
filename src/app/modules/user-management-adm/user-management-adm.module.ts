@@ -11,8 +11,7 @@ import { AppModule } from 'src/app/app.module';
     UserManagmentAdmComponent
   ],
   imports: [
-    CommonModule,
-    AppModule
+    CommonModule
   ]
 })
 export class UserManagementAdmModule { }

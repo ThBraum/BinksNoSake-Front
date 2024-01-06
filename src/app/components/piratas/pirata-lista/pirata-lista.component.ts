@@ -16,6 +16,7 @@ import { environment } from 'src/environments/environment';
 import { Pirata } from 'src/app/interfaces/pirata/pirata';
 import { Usuario } from 'src/app/interfaces/usuario/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class MyCustomPaginatorIntl implements MatPaginatorIntl {
@@ -75,6 +76,7 @@ export class PirataListaComponent implements OnInit, OnDestroy {
     private readonly snackBarService: SnackBarService,
     private readonly fb: FormBuilder,
     private readonly usuarioService: UsuarioService,
+    private datePipe: DatePipe,
   ) { }
 
   ngOnInit(): void {
