@@ -8,6 +8,7 @@ import { UsuarioResolver } from './resolvers/usuario.resolver';
 import { PirataListaComponent } from './components/piratas/pirata-lista/pirata-lista.component';
 import { pirataListaResolver } from './resolvers/pirata-lista.resolver';
 import { CriacaoPirataComponent } from './components/piratas/criacao-pirata/criacao-pirata.component';
+import { RegisterComponent } from './components/pages/core/register/register.component';
 
 const homeRoute = 'pirata';
 const routes: Routes = [
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   },
   {
     path: 'user',

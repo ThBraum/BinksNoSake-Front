@@ -13,24 +13,23 @@ export class RegisterComponent {
   constructor(
     private readonly usuarioService: UsuarioService,
     private readonly router: Router,
-    private readonly snackBarService: SnackBarService) { }
+    private snackBarService: SnackBarService,
+  ) { }
 
-  register(data: UsuarioCreate): void {
-    const newAccount: UsuarioCreate = {
-      primeiroNome: data.primeiroNome,
-      ultimoNome: data.ultimoNome,
-      username: data.username,
-      email: data.email,
-      password: data.password,
-    }
-    this.usuarioService.register(newAccount).subscribe({
-      next: (response) => {
-        this.snackBarService.showMessage('Conta criada com sucesso!', false);
-        this.router.navigateByUrl('/login');
+  profileCreate(data: FormData): void {
+    this.usuarioService.register(data).subscribe({
+      next: (response: any) => {
+        if (response.user) this.usuarioService.setCurrentUser(response.user.result);
+        if (response.token) this.usuarioService.atualizarTokenAtual(response.token);
+
+        this.snackBarService.showMessage("Perfil criado com sucesso.");
+        this.router.navigateByUrl('/pirata');
       },
-      error: (error) => {
-        this.snackBarService.showMessage('Erro ao criar conta', true);
-      }
-    });
+      error: (err) => {
+        this.snackBarService.showMessage("Erro ao criar perfil.", true);
+        const error = err.error;
+        console.log(error);
+      },
+    })
   }
 }

@@ -4,8 +4,8 @@ export interface Usuario { //User
   id: number;
   username: string;
   email: string;
-  primeiroNome: string;
-  ultimoNome: string;
+  nome: string;
+  sobrenome: string;
   phoneNumber?: string;
   imagemURL: string;
   funcao?: Funcao;

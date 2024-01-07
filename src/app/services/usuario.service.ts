@@ -119,16 +119,9 @@ export class UsuarioService {
     this.emitLoginEvent();
   }
 
-  register(model: any): Observable<void> {
+  register(model: FormData): Observable<Usuario> {
     return this.http.post<Usuario>(this.apiAccountUrl + '/register', model).pipe(
-      take(1),
-      map((response: Usuario) => {
-        const user = response;
-        if (user) {
-          this.setCurrentUser(user)
-        }
-      })
-    );
+      take(1));
   }
 
   updateUser(userData: FormData): Observable<any> {

@@ -1,1 +1,21 @@
-<p>register works!</p>
+<div class="background d-flex justify-content-center align-items-center m-0">
+  <div class="w-100 container p-4">
+    <mat-card>
+      <mat-card-title class="w-100">
+        <h1 class="mat-h1 ms-3">Registre-se</h1>
+      </mat-card-title>
+      <mat-card-content>
+        <app-usuario-form
+        [textoTipoAcaoBotao]="'Registrar'"
+        [usuarioCreate]="true"
+        [usuarioLogin]="false"
+        [usuarioUpdate]="false"
+        [coletaPhoneNumber]="true"
+        [coletaImagem]="true"
+        [coletaSenha]="true"
+        (notificarSubmitForm)="profileCreate($event)">
+        </app-usuario-form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

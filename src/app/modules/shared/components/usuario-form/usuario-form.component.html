@@ -27,18 +27,18 @@
       </div>
       <div class="col-12">
         <mat-form-field class="w-100 no-space-hint">
-          <mat-label>Primeiro nome</mat-label>
-          <input title="primeiroNome" matInput formControlName="primeiroNome" name="primeiroNome">
+          <mat-label>Nome</mat-label>
+          <input title="nome" matInput formControlName="nome" name="nome">
         </mat-form-field>
       </div>
       <div class="col-12">
         <mat-form-field class="w-100 no-space-hint">
-          <mat-label>Último nome</mat-label>
-          <input title="ultimoNome" matInput formControlName="ultimoNome" name="ultimoNome">
+          <mat-label>Sobrenome</mat-label>
+          <input title="sobrenome" matInput formControlName="sobrenome" name="sobrenome">
         </mat-form-field>
       </div>
     </div>
-    <div class="col-12 col-md-auto order-first order-md-last" *ngIf="usuarioUpdate">
+    <div class="col-12 col-md-auto order-first order-md-last">
       <div class="col-12 position-relative" *ngIf="coletaImagem">
         <label class="hoverable m-auto m-md-0" for="fileInput">
           <img title="image" [src]="url">

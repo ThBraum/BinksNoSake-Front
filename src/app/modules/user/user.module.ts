@@ -13,7 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     ProfileUpdateComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,

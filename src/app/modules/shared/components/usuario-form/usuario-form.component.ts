@@ -42,13 +42,14 @@ export class UsuarioFormComponent {
       id: [{ value: this.dadosUsuario?.id, disabled: false }],
       username: [
         { value: this.dadosUsuario?.username, disabled: false },
+        [Validators.required],
       ],
-      primeiroNome: [
-        { value: this.dadosUsuario?.primeiroNome, disabled: false },
+      nome: [
+        { value: this.dadosUsuario?.nome, disabled: false },
         this.usuarioCreate || this.usuarioUpdate ? [Validators.required] : [],
       ],
-      ultimoNome: [
-        { value: this.dadosUsuario?.ultimoNome, disabled: false },
+      sobrenome: [
+        { value: this.dadosUsuario?.sobrenome, disabled: false },
         this.usuarioCreate || this.usuarioUpdate ? [Validators.required] : [],
       ],
       email: [
@@ -90,8 +91,8 @@ export class UsuarioFormComponent {
     if (this.usuarioCreate) {
       dadosFormulario.username = this.usuarioForm.value.username;
       dadosFormulario.email = this.usuarioForm.value.email;
-      dadosFormulario.primeiroNome = this.usuarioForm.value.primeiroNome;
-      dadosFormulario.ultimoNome = this.usuarioForm.value.ultimoNome;
+      dadosFormulario.nome = this.usuarioForm.value.nome;
+      dadosFormulario.sobrenome = this.usuarioForm.value.sobrenome;
       dadosFormulario.phoneNumber = this.usuarioForm.value.phoneNumber;
       dadosFormulario.password = this.usuarioForm.value.password;
     }
@@ -99,8 +100,8 @@ export class UsuarioFormComponent {
     if (this.usuarioUpdate) {
       dadosFormulario.username = this.usuarioForm.value.username;
       // dadosFormulario.email = this.usuarioForm.value.email;
-      dadosFormulario.primeiroNome = this.usuarioForm.value.primeiroNome;
-      dadosFormulario.ultimoNome = this.usuarioForm.value.ultimoNome;
+      dadosFormulario.nome = this.usuarioForm.value.nome;
+      dadosFormulario.sobrenome = this.usuarioForm.value.sobrenome;
       dadosFormulario.phoneNumber = this.usuarioForm.value.phoneNumber;
       dadosFormulario.funcao = this.usuarioForm.value.funcao;
     }
@@ -121,7 +122,7 @@ export class UsuarioFormComponent {
   }
 
   validarSenha(confirmarSenhaControl: AbstractControl) {
-    const senhaControl = confirmarSenhaControl.parent?.get('senha');
+    const senhaControl = confirmarSenhaControl.parent?.get('password');
     if (senhaControl?.value !== confirmarSenhaControl.value) {
       return { senhaIncompativel: true };
     } else {

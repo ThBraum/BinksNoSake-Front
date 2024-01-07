@@ -24,7 +24,7 @@
           </button>
         </mat-form-field>
       </mat-card-content>
-      <a class="text-center small">Não tem uma conta? Registre-se</a>
+      <a class="text-center small" routerLink="/register">Não tem uma conta? Registre-se</a>
       <mat-card-actions>
         <button mat-raised-button color="primary" class="w-100" [disabled]="!loginForm.valid"
           (click)="login()">Login</button>
