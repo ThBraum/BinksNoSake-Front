@@ -39,7 +39,7 @@ export class CriacaoPirataComponent implements OnInit {
     private dateAdapter: DateAdapter<Date>,
     private readonly snackBarService: SnackBarService,
     private datePipe: DatePipe,
-    private router: Router,
+    private readonly router: Router,
   ) {
     // this.dateAdapter.setLocale('pt-BR');
   }
@@ -136,7 +136,7 @@ export class CriacaoPirataComponent implements OnInit {
     this.pirataService.postPirata(data).subscribe({
       next: (pirata) => {
         this.snackBarService.showMessage("Pirata criado com sucesso.", false);
-        this.router.navigate(['/pirata']);
+        this.router.navigateByUrl('/pirata');
       },
       error: (err) => {
         this.snackBarService.showMessage("Erro ao criar pirata.", true);

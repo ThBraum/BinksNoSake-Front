@@ -99,9 +99,22 @@ export class PirataListaComponent implements OnInit, OnDestroy {
       pageSize: [{ value: this.filter.pageSize, disabled: false }],
     });
 
+    this.search();
+
+    this.pageSizeChange();
+
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  search(): void {
     this.filterForm.get('search')?.valueChanges.pipe(
       takeUntil(this.destroy$),
-      debounceTime(1000),
+      debounceTime(800),
       distinctUntilChanged(),
       switchMap((value) => {
         this.filter.term = value === '' ? undefined : value;
@@ -124,7 +137,9 @@ export class PirataListaComponent implements OnInit, OnDestroy {
         this.snackBarService.showMessage(error.error, true);
       },
     });
+  }
 
+  pageSizeChange(): void {
     this.filterForm.get('pageSize')?.valueChanges.pipe(
       takeUntil(this.destroy$),
       distinctUntilChanged(),
@@ -149,12 +164,6 @@ export class PirataListaComponent implements OnInit, OnDestroy {
         this.snackBarService.showMessage(error.error, true);
       },
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   mostrarImagem(imagemURL: string): string {
@@ -195,10 +204,26 @@ export class PirataListaComponent implements OnInit, OnDestroy {
     }).add(() => (this.loading = false));
   }
 
+  sortData(event: Sort): void {
+    if (!this.filter.sort) {
+      this.filter.sort = { active: '', direction: 'asc' };
+    }
+
+    if (this.filter.sort.active === event.active) {
+      this.filter.sort.direction = this.filter.sort.direction === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.filter.sort.active = event.active || '';
+      this.filter.sort.direction = 'asc';
+    }
+
+    this.loadPiratas(this.filter);
+  }
+
   private setData(piratasPaginado: PiratasPaginado) {
     this.piratasPaginado = piratasPaginado;
     this.piratasPaginado.pageNumber -= 1;
     this.dataSource = new MatTableDataSource(this.piratasPaginado.piratas);
+    if (this.sort) this.dataSource.sort = this.sort;
   }
 
   handleUnauthorized(): void {

@@ -24,11 +24,16 @@ export class PirataService {
       .set('PageSize', filtro.pageSize.toString());
     if (filtro.term) params = params.set('Term', filtro.term);
 
-    return this.http.get<Pirata[]>(`${this.apiPirataUrl}`, { observe: 'response',  params }).pipe(
+    if (filtro.sort?.active) {
+      params = params.set('OrderBy', filtro.sort.active);
+      params = params.set('SortDirection', filtro.sort.direction);
+    }
+
+    return this.http.get<Pirata[]>(`${this.apiPirataUrl}`, { observe: 'response', params }).pipe(
       take(1),
       map((response) => {
         var paginacao: Pagination = {} as Pagination;
-        if(response.headers.has('Pagination')) {
+        if (response.headers.has('Pagination')) {
           paginacao = JSON.parse(response.headers.get('Pagination')!);
         }
         return { piratas: response.body, ...paginacao } as PiratasPaginado;

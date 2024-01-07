@@ -69,8 +69,8 @@ const MY_DATE_FORMATS: MatDateFormats = {
     ReactiveFormsModule,
     MatPaginatorModule,
     MatIconModule,
-    MatTableModule,
     MatStepperModule,
+    MatTableModule,
     MatSortModule,
   ],
   providers: [

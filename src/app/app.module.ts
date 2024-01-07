@@ -4,6 +4,8 @@ import { DatePipe } from '@angular/common';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -43,6 +45,8 @@ function tokenGetter() {
     BrowserAnimationsModule,
     HttpClientModule,
     FontAwesomeModule,
+    MatTableModule,
+    MatSortModule,
     SharedModule,
     AngularFireModule.initializeApp(environment.firebase),
     FormsModule,
