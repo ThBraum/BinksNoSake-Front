@@ -15,7 +15,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: homeRoute,
-    pathMatch: 'prefix',
+    pathMatch: 'full',
   },
   {
     path: 'home',
