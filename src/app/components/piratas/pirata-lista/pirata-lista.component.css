@@ -1,11 +1,3 @@
-.img-thumbnail {
-  width: 40px;
-  height: 40px;
-  border: 2px solid #000;
-  cursor: default;
-}
-
-
 .demo-table {
   width: 100%;
 }
@@ -33,11 +25,22 @@
 }
 
 .foto-pirata {
-  max-width: 150px;
-  width: 150px;
+  width: 160px;
   height: 100%;
   max-height: 150px;
+  min-width: 160px;
+  max-width: 160px;
+  max-height: 160px;
+  min-height: 160px;
   aspect-ratio: 4/3;
+}
+
+.objetivo-column {
+  white-space: normal;
+  max-height: 150px;
+  min-height: 150px;
+  overflow: hidden;
+  min-width: 500px;
 }
 
 .nowrap {
