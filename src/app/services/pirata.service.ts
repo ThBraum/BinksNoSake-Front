@@ -48,7 +48,6 @@ export class PirataService {
     return this.http.post<any>(`${this.apiPirataUrl}`, pirata).pipe(
       take(1),
       map((response: any) => {
-        console.log("response: ", response);
         this.snackBarService.showMessage("Pirata criado com sucesso.");
         return response;
       }),

@@ -1,5 +1,68 @@
-.mdc-card__actions {
-  min-height: 20px;
+img {
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.position-absolute-top-right {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.position-absolute-top-right img {
+  z-index: 2;
+}
+
+.hoverable {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  height: 150px;
+  width: 150px;
+  border: 3px solid #000;
+  border-radius: 50%;
+}
+
+.hoverable .hover-text {
+  position: absolute;
+  display: none;
+  top: 53%;
+  left: 30%;
+  transform: translate(-20%, -40%);
+  z-index: 2;
+  color: black;
+  font-weight: bold;
+  font-size: small;
+}
+
+.hoverable .background {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(6, 61, 61, 0.747);
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.hoverable:hover .hover-text {
+  display: block;
+}
+
+.hoverable:hover .background {
+  display: block;
+}
+
+#fileInput {
+  display: none;
 }
 
 .separator {
@@ -25,30 +88,325 @@
   border-bottom: 1px solid #ffffffd5;
 }
 
+.sign-up-form {
+  transition: height 0.5s ease-in-out;
+  height: 750px;
+  overflow: hidden;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+.password-toggle-button {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.disabled-button {
+  background-color: #cacaca !important;
+  cursor: not-allowed;
+}
+
 .google-login-button {
   display: flex;
   align-items: center;
-  justify-content: start;
   background-color: white;
   color: black;
-  padding: 5px;
-  border-radius: 10px;
+  padding: 15px 20px;
+  border-radius: 25px;
+  height: 54px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+
+  .fa-google {
+    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.3em;
+    margin-left: -5px;
+  }
+
+  &:hover {
+    background-color: #cccccc;
+  }
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #d3d3d3;
+    color: #808080;
+    cursor: not-allowed;
+  }
 }
 
-.google-login-button:hover {
-  background-color: #cccccc;
+.login-button {
+  display: flex;
+  justify-content: start;
 }
 
-.google-icon {
-  width: 18px;
-  height: 28px;
-  margin-right: 10px;
-  margin-left: 5px;
-  vertical-align: middle;
+.tab {
+  cursor: pointer;
 }
 
-.google-login-button span {
-  vertical-align: middle;
+.login-box {
+  width: 100%;
+  margin: auto;
+  max-width: 525px;
+  min-height: 670px;
+  position: relative;
+  background: url('../../../../../assets/tony-tony-chopper-one-piece.jpg') no-repeat center;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
+  transition: height 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.login-snip {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  padding: 10px 10px 40px 10px;
+  background: rgba(6, 61, 61, 0.856)
+}
+
+.login-snip .login,
+.login-snip .sign-up-form {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  transition: all .4s linear;
+}
+
+.login-snip .sign-in,
+.login-snip .sign-up,
+.login-space .group .check {
+  display: none
+}
+
+.login-snip .tab,
+.login-space .group .label,
+.login-space .group .button {
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.group .button,
+.login-button .button,
+.google-login-button {
+  width: 100%;
+}
+
+.login-snip .tab {
+  font-size: 21px;
+  margin-right: 15px;
+  padding-bottom: 5px;
+  margin: 0 15px 10px 0;
+  display: inline-block;
+  border-bottom: 2px solid transparent
+}
+
+.login-snip .sign-in:checked+.tab,
+.login-snip .sign-up:checked+.tab {
+  color: #fff;
+  border-color: #11afee
+}
+
+.login-space {
+  min-height: 345px;
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+  transition: height 0.5s ease-in-out;
+}
+
+.login-space .group {
+  margin-bottom: 15px
+}
+
+.login-space .group .label,
+.login-space .group .input,
+.login-space .group .button {
+  width: 100%;
+  color: #fff;
+  display: block;
+}
+
+.login-space .group .input,
+.login-space .group .button {
+  border: none;
+  padding: 15px 20px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.356);
+}
+
+.login-space .group input[data-type="password"] {
+  text-security: circle;
+  -webkit-text-security: circle
+}
+
+.login-space .group .label {
+  color: #d8d6d6;
+  font-size: 13px;
+  margin-top: 5px;
+  margin-bottom: 1px;
+}
+
+.login-space .group .button {
+  background: #11afeedc
+}
+
+.login-space .group label .icon {
+  width: 15px;
+  height: 15px;
+  border-radius: 2px;
+  position: relative;
+  display: inline-block;
+  background: rgba(255, 255, 255, .1)
+}
+
+.login-space .group label .icon:before,
+.login-space .group label .icon:after {
+  content: '';
+  width: 10px;
+  height: 2px;
+  background: #fff;
+  position: absolute;
+  transition: all .4s ease-in-out 0s
+}
+
+.login-space .group label .icon:before {
+  left: 3px;
+  width: 5px;
+  bottom: 6px;
+  transform: scale(0) rotate(0)
+}
+
+.login-space .group label .icon:after {
+  top: 6px;
+  right: 0;
+  transform: scale(0) rotate(0)
+}
+
+.login-space .group .check:checked+label {
+  color: #fff
+}
+
+.login-space .group .check:checked+label .icon {
+  background: #1161ee
+}
+
+.login-space .group .check:checked+label .icon:before {
+  transform: scale(1) rotate(45deg)
+}
+
+.login-space .group .check:checked+label .icon:after {
+  transform: scale(1) rotate(-45deg)
+}
+
+.login-snip .sign-in:checked+.tab+.sign-up+.tab+.login-space .login {
+  transform: rotate(0)
+}
+
+.login-snip .sign-up:checked+.tab+.login-space .sign-up-form {
+  transform: rotate(0)
+}
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+.clearfix:after,
+.clearfix:before {
+  content: '';
+  display: table
+}
+
+.clearfix:after {
+  clear: both;
+  display: block
+}
+
+::placeholder {
+  color: #f1f1f1
+}
+
+.no-gutters {
+  margin: 0px;
+}
+
+.sign-up-form {
+  font-size: 14px;
+}
+
+.row {
+  --bs-gutter-x: 0;
+  --bs-gutter-y: 0;
+}
+
+mat-hint {
+  font-size: 15px;
+}
+
+.hide-button {
+  margin-top: -10px;
+}
+
+@media screen and (max-width: 767px) {
+  .sign-up-form .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .register-button {
+    margin-top: -10px;
+  }
+
+  mat-label.label.form-label {
+    margin: 3px 0px 1px 0px;
+  }
+
+  .login-space .group .input,
+  .login-space .group .button {
+    border: none;
+    padding: 15px 25px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.356);
+  }
+
+  .login-space .group .button {
+    background: #11afeedc
+  }
+
+  .sign-up-form .col-md {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sign-up-form .group .input,
+  .sign-up-form .group .button {
+    height: 35px;
+  }
 }

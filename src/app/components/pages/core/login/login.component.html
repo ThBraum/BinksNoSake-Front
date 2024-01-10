@@ -1,45 +1,144 @@
-<div class="background d-flex justify-content-center align-items-center m-0">
-  <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 p-4">
-    <mat-card>
-      <div *ngIf="spinner" class="loading-spinner">
-        <mat-spinner></mat-spinner>
-      </div>
-      <mat-card-header>
-        <mat-card-title>
-          <h1 class="mat-h1">Login</h1>
-        </mat-card-title>
-      </mat-card-header>
-      <mat-card-content [formGroup]="loginForm">
-        <mat-form-field class="w-100">
-          <mat-label>E-mail ou nome de usuário</mat-label>
-          <input title="username" matInput name="username" formControlName="username">
-        </mat-form-field>
-        <mat-form-field class="w-100">
-          <mat-label>Senha</mat-label>
-          <input title="password" matInput [type]="hide ? 'password' : 'text'" name="current-password"
-            formControlName="password">
-          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide">
-            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
-      </mat-card-content>
-      <a class="text-center small" routerLink="/register">Não tem uma conta? Registre-se</a>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" class="w-100" [disabled]="!loginForm.valid"
-          (click)="login()">Login</button>
-      </mat-card-actions>
-      <mat-card-actions>
-        <div class="separator">
-          <span class="separator-text"> Acesso rápido </span>
+<div class="background d-flex justify-content-center align-items-center m-0 w-100 no-space-hint">
+  <div class="col-12 col-sm-10 col-md-8 col-lg-8 col-xl-6 p-4 no-gutters w-100 no-space-hint">
+    <div *ngIf="spinner" class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="login-box">
+      <div class="login-snip">
+        <input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+        <label for="tab-1" class="tab">Entrar</label>
+        <input id="tab-2" type="radio" name="tab" class="sign-up">
+        <label for="tab-2" class="tab">Registre-se</label>
+        <div class="login-space">
+          <div class="login" [formGroup]="signInForm">
+            <div class="group mt-4">
+              <mat-label for="user" class="label form-label">E-mail ou nome de usuário*</mat-label>
+              <input type="text" class="input" placeholder="name@example.com" title="username" matInput name="username"
+                formControlName="username" required>
+            </div>
+            <div class="group mt-3">
+              <mat-label for="pass" class="label form-label">Senha*</mat-label>
+              <div class="password-input-container">
+                <input type="password" class="input" title="password" matInput [type]="hide ? 'password' : 'text'"
+                  name="current-password" formControlName="password" required>
+                <button mat-icon-button (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide" class="password-toggle-button">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+              </div>
+            </div>
+            <ng-container *ngIf="signInForm.valid; else invalid">
+              <div class="group mt-4" (click)="login()"> <input type="submit" class="button" value="Login"
+                  [ngClass]="{'disabled-button': !signInForm.valid}"> </div>
+            </ng-container>
+            <ng-template #invalid>
+              <div class="group mt-4"> <input type="submit" class="button" value="Login"
+                  [ngClass]="{'disabled-button': !signInForm.valid}" matTooltip="Preencha os campos obrigatórios."
+                  matTooltipPosition="above"> </div>
+            </ng-template>
+            <div class="separator mt-5 mb-2">
+              <span class="separator-text"> Acesso rápido </span>
+            </div>
+            <div class="group mt-4 google-login-button" (click)="loginWithGoogle()">
+              <i class="fab fa-google me-2"></i>
+              <span>LOGIN COM GOOGLE</span>
+            </div>
+          </div>
+          <div class="sign-up-form" [formGroup]="signUpForm">
+            <div class="row">
+              <div class="col-12 col-md-auto order-first order-md-last mb-3 text-center text-md-end">
+                <label class="hoverable m-auto m-md-0" for="fileInput">
+                  <img title="image" [src]="url">
+                  <div class="hover-text" style="overflow-wrap: break-word;">Alterar imagem</div>
+                  <div class="background"></div>
+                </label>
+                <input id="fileInput" #fileInput type='file' accept="image/*" (change)="onSelectFile($event)">
+                <button mat-icon-button color="primary" *ngIf="url" (click)="delete()" type="button"
+                  class="position-absolute top-0 end-0 d-md-none" style="margin: -12px -12px 0 0;">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+              <div class="col-md">
+                <div class="row">
+                  <div class="col-6">
+                    <div class="group" style="margin-right: 2px; margin-top: -5px;">
+                      <mat-label for="user" class="label form-label">Nome*</mat-label>
+                      <input type="text" class="input w-100 no-space-hint" placeholder="Seu nome" title="nome" matInput
+                        name="nome" formControlName="nome" required>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="group" style="margin-left: 2px; margin-top: -5px;">
+                      <mat-label for="user" class="label form-label">Sobrenome*</mat-label>
+                      <input type="text" class="input w-100 no-space-hint" placeholder="Seu Sobrenome" title="sobrenome"
+                        matInput name="sobrenome" formControlName="sobrenome" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md">
+                  <div class="group">
+                    <mat-label for="user" class="label form-label">Username*</mat-label>
+                    <input type="text" class="input w-100" placeholder="Seu Username" title="username" matInput
+                      name="username" formControlName="username" required>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row col-md">
+              <div class="col-6">
+                <div class="group" style="margin-right: 2px;">
+                  <mat-label for="user" class="label form-label">Email*</mat-label>
+                  <input type="text" class="input w-100 no-space-hint" placeholder="example@example.com" title="email"
+                    matInput name="email" formControlName="email" required>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="group" style="margin-left: 2px;">
+                  <mat-label for="phoneNumber" class="label form-label">Phone Number</mat-label>
+                  <input type="text" class="input w-100 no-space-hint" placeholder="(00) 00000-0000" title="phoneNumber"
+                    matInput name="phoneNumber" formControlName="phoneNumber">
+                </div>
+              </div>
+            </div>
+            <div class="group">
+              <mat-label for="pass" class="label form-label">Senha*</mat-label>
+              <div class="password-input-container">
+                <input class="input" placeholder="Crie uma senha" title="password" matInput
+                  [type]="hidePassword ? 'password' : 'text'" name="password" formControlName="password" required>
+                <button mat-icon-button (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hidePassword" class="password-toggle-button hide-button">
+                  <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-hint><strong>A senha deve ter pelo menos 6 caracteres</strong></mat-hint>
+              </div>
+            </div>
+            <div class="group">
+              <mat-label for="pass" class="label form-label">Confirmar senha*</mat-label>
+              <div class="password-input-container">
+                <input class="input" placeholder="Repita sua senha" title="password" matInput
+                  [type]="hidePasswordConfirmation ? 'password' : 'text'" name="password"
+                  formControlName="confirmarSenha" required>
+                <button mat-icon-button (click)="hidePasswordConfirmation = !hidePasswordConfirmation"
+                  [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePasswordConfirmation"
+                  class="password-toggle-button hide-button">
+                  <mat-icon>{{hidePasswordConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-hint><strong>Confirme a senha inserida anteriormente</strong></mat-hint>
+              </div>
+            </div>
+            <ng-container *ngIf="signUpForm.valid; else invalid2">
+              <div class="group" (click)="generateFormData(signUpForm.value)"> <input type="submit"
+                  class="button register-button" value="Registrar" [ngClass]="{'disabled-button': !signUpForm.valid}">
+              </div>
+            </ng-container>
+            <ng-template #invalid2>
+              <div class="group"> <input type="submit" class="button register-button"
+                  value="Registrar" [ngClass]="{'disabled-button': !signUpForm.valid}"
+                  matTooltip="Preencha os campos obrigatórios." matTooltipPosition="above" disabled> </div>
+            </ng-template>
+          </div>
         </div>
-      </mat-card-actions>
-      <mat-card-actions>
-        <button mat-raised-button class="w-100 google-login-button" (click)="loginWithGoogle()">
-          <mat-icon svgIcon="logo" class="google-icon"></mat-icon>
-          <span>Login com Google</span>
-        </button>
-      </mat-card-actions>
-    </mat-card>
+      </div>
+    </div>
   </div>
 </div>
