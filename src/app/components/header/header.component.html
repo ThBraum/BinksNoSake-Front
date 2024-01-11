@@ -8,7 +8,7 @@
         <a mat-tab-link class="text-white" routerLink="/pirata" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
           Piratas
         </a>
-        <a mat-tab-link class="text-white disabled" routerLinkActive #rla="routerLinkActive" disabled [active]="rla.isActive">
+        <a mat-tab-link class="text-white" routerLink="/capitao" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
           Capitães
         </a>
         <a mat-tab-link class="text-white disabled" routerLinkActive #rla="routerLinkActive" disabled [active]="rla.isActive">
@@ -85,7 +85,7 @@
           <a class="nav-link text-white" aria-current="page" routerLink="/pirata">Piratas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white disabled" aria-current="page" disabled>Capitães</a>
+          <a class="nav-link text-white" aria-current="page" routerLink="/capitao">Capitães</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white disabled" aria-current="page" disabled>Navios</a>

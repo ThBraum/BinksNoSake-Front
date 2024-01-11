@@ -45,7 +45,6 @@ export class MyCustomPaginatorIntl implements MatPaginatorIntl {
   ]
 })
 export class PirataListaComponent implements OnInit, OnDestroy {
-  autoplaySubscription?: Subscription;
   subscription?: Subscription;
   filterForm!: FormGroup;
   showMobileFilter = false;
@@ -124,12 +123,16 @@ export class PirataListaComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: (piratasPaginado) => {
         this.setData(piratasPaginado);
+        setTimeout(() => {
+          this.paginator.pageIndex = this.filter.pageNumber - 1;
+        });
         this.router.navigate(['/pirata'], {
           queryParams: {
             PageNumber: this.filter.pageNumber,
             PageSize: this.filter.pageSize,
             Term: this.filter.term,
           },
+          queryParamsHandling: 'merge',
           replaceUrl: true,
         });
       },
@@ -157,6 +160,7 @@ export class PirataListaComponent implements OnInit, OnDestroy {
             PageSize: this.filter.pageSize,
             Term: this.filter.term,
           },
+          queryParamsHandling: 'merge',
           replaceUrl: true,
         });
       },
@@ -175,6 +179,7 @@ export class PirataListaComponent implements OnInit, OnDestroy {
 
   handlePageEvent(event: PageEvent): void {
     this.filter.pageNumber = event.pageIndex + 1;
+    this.filter.pageSize = event.pageSize;
     this.loadPiratas();
   }
 
@@ -195,6 +200,7 @@ export class PirataListaComponent implements OnInit, OnDestroy {
             PageSize: this.filter.pageSize,
             Term: this.filter.term,
           },
+          queryParamsHandling: 'merge',
           replaceUrl: true,
         });
       },

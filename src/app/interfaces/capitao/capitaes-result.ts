@@ -3,5 +3,5 @@ import { CapitaesPaginado } from "./capitaesPaginado";
 
 export interface CapitaesResult {
   searchFilter: FiltroBusca;
-  paginatedPiratas: CapitaesPaginado;
+  paginatedCapitaes: CapitaesPaginado;
 }

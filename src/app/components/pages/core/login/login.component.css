@@ -40,6 +40,10 @@ img {
   font-size: small;
 }
 
+input:focus {
+  outline: none;
+}
+
 .hoverable .background {
   position: absolute;
   display: none;
@@ -183,7 +187,7 @@ img {
   height: 100%;
   position: absolute;
   padding: 10px 10px 40px 10px;
-  background: rgba(6, 61, 61, 0.856)
+  background: rgba(15, 134, 134, 0.856)
 }
 
 .login-snip .login,

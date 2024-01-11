@@ -49,6 +49,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./components/piratas/pirata.module').then(m => m.PirataModule),
   },
+  {
+    path: 'capitao',
+    loadChildren: () =>
+      import('./components/capitao/capitao.module').then(m => m.CapitaoModule),
+  }
 ];
 
 @NgModule({
