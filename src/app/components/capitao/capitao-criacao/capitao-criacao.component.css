@@ -1,0 +1,91 @@
+@media (max-width: 767px) {
+  .centralize-on-mobile {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+img {
+  height: 150px;
+  width: auto;
+  aspect-ratio: 4/3;
+  margin-left: -15px;
+  border-radius: 10%;
+}
+
+.hoverable .background {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  pointer-events: none;
+  border-radius: 10%;
+  z-index: 1;
+  width: auto;
+  height: 150px;
+  aspect-ratio: 4/3;
+  margin-left: -25px;
+  margin-right: 7px;
+}
+
+.hoverable:hover .hover-text {
+  background-image: none;
+  display: block;
+}
+
+.hoverable:hover .background {
+  display: block;
+  background-image: none;
+  background-color: rgba(116, 116, 116, 0.932);
+  z-index: 0;
+  margin-left: -8px !important;
+}
+
+#fileInput {
+  display: none;
+}
+
+.hoverable {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  width: auto;
+  height: 150px;
+  aspect-ratio: 4/3;
+  margin-left: -15px;
+  border-radius: 10%;
+}
+
+.hoverable .hover-text {
+  background-image: none;
+  position: absolute;
+  display: none;
+  top: 53%;
+  left: 30%;
+  transform: translate(-20%, -40%);
+  z-index: 2;
+}
+
+.hoverable:hover .background {
+  border-radius: 10%;
+  display: block;
+}
+
+.additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.delete-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.delete-button .position-absolute {
+  margin-top: 10px;
+  margin-right: 0 !important;
+}

@@ -49,7 +49,7 @@ export class CapitaoListaComponent implements OnInit, OnDestroy {
   loading = false;
   pageSizeValues = [3, 5, 10, 25, 50];
 
-  displayedColumns: string[] = ['imagemURL', 'nome', 'piratas', 'timoneiro', 'acoes'];
+  displayedColumns: string[] = ['imagemURL', 'nome', 'piratas', /* 'timoneiro', */ 'acoes'];
   dataSource: MatTableDataSource<Capitao> = new MatTableDataSource<Capitao>();
 
   capitaes: Capitao[] = [];

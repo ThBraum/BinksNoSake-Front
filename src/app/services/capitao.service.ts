@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { SnackBarService } from './snack-bar.service';
 import { FiltroBusca } from '../interfaces/filtro-busca';
-import { Observable, map, take } from 'rxjs';
+import { Observable, catchError, map, take, throwError } from 'rxjs';
 import { CapitaesPaginado } from '../interfaces/capitao/capitaesPaginado';
 import { Capitao } from '../interfaces/capitao/capitao';
 import { Pagination } from '../interfaces/pagination';
@@ -46,6 +46,20 @@ export class CapitaoService {
       take(1),
       map((response: any) => {
         return response;
+      })
+    );
+  }
+
+  addCapitaoCompleto(capitao: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiCapitaoUrl}`, capitao).pipe(
+      take(1),
+      map((response: any) => {
+        this.snackBarService.showMessage("Capitão criado com sucesso.");
+        return response;
+      }),
+      catchError((error) => {
+        this.snackBarService.showMessage("Erro ao criar capitão.", true);
+        return throwError(error);
       })
     );
   }

@@ -40,9 +40,7 @@ export class CriacaoPirataComponent implements OnInit {
     private readonly snackBarService: SnackBarService,
     private datePipe: DatePipe,
     private readonly router: Router,
-  ) {
-    // this.dateAdapter.setLocale('pt-BR');
-  }
+  ) { }
 
   ngOnInit(): void {
     const filtro: FiltroBusca = {
@@ -61,7 +59,6 @@ export class CriacaoPirataComponent implements OnInit {
       funcao: ['', Validators.required],
       dataIngressoTripulacao: [null, Validators.required],
       objetivo: [''],
-      // imagemUrl: [''],
     });
 
     this.camposCapitao = this.fb.group({

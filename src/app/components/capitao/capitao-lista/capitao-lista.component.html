@@ -3,14 +3,14 @@
     <div class="row my-3 px-3 mt-1">
       <ng-container *ngIf="this.usuario; else loga">
         <div class="col-12 col-md-auto mt-2 me-auto">
-          <button mat-raised-button class="w-100" color="primary" type="button" routerLink="/pirata/create" disabled="true">Novo Capitão
+          <button mat-raised-button class="w-100" color="primary" type="button" routerLink="/capitao/create">Novo Capitão
             <mat-icon>add</mat-icon>
           </button>
         </div>
       </ng-container>
       <ng-template #loga>
         <div class="col-12 col-md-auto mt-2 me-auto">
-          <button mat-raised-button class="w-100" color="primary" type="button" routerLink="/login" disabled="true">Novo Capitão
+          <button mat-raised-button class="w-100" color="primary" type="button" routerLink="/login">Novo Capitão
             <mat-icon>add</mat-icon>
           </button>
         </div>
@@ -63,10 +63,10 @@
             <td mat-cell *matCellDef="let row" class="piratas-column">{{ getPiratasNames(row.piratas) | titlecase }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="timoneiro">
+          <!-- <ng-container matColumnDef="timoneiro">
             <th mat-header-cell *matHeaderCellDef>Timoneiro</th>
             <td mat-cell *matCellDef="let row">{{ getTimoneiro(row.timoneiro) | titlecase }}</td>
-          </ng-container>
+          </ng-container> -->
 
           <ng-container matColumnDef="acoes">
             <th mat-header-cell *matHeaderCellDef>Ações</th>
