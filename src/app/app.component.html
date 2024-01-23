@@ -1,10 +1,97 @@
 <div class="telaCheia">
-  <app-header></app-header>
-  <div>
-    <div *ngIf="loadingRoute" class="loading-spinner">
-      <mat-spinner></mat-spinner>
+  <!-- <app-header></app-header> -->
+  <header class="d-none d-md-block bg-dark" style="height: 50px; z-index: 3">
+    <nav>
+      <div class="d-flex">
+        <div class="logo-background">
+          <img src="../../../assets/ChopperLogo.png" alt="logo" width="50" height="50"
+            class="d-inline-block align-text-top logo" (click)="isExpanded = !isExpanded">
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <nav class="d-md-none d-flex flex-column bg-dark" style="height: 50px; z-index: 3">
+    <div class="d-flex justify-content-between">
+      <div class="logo-background" style="max-width: 50px;">
+        <img src="../../../assets/ChopperLogo.png" alt="logo" width="50" height="50"
+          class="d-inline-block align-text-top mt-2 logo" (click)="isExpanded = !isExpanded">
+      </div>
     </div>
-    <router-outlet></router-outlet>
-  </div>
+  </nav>
+
+  <mat-sidenav-container class="sidenav-container" autosize>
+    <div class="sidenav bg-dark">
+      <div class="col-12 col-md-auto order-first order-md-last mt-3" *ngIf="isExpanded && usuario">
+        <div class="col-12 position-relative">
+          <img [src]="imageUrl" alt="image" *ngIf="usuario" class="image">
+          <div class="user-info">
+            <span>{{usuario.nome }} {{usuario.sobrenome}}</span>
+          </div>
+          <div class="divider"></div>
+        </div>
+      </div>
+      <mat-sidenav #sidenav class="mat-sidenav bg-dark" mode="side" opened="true">
+        <mat-nav-list class="nav-list-item" [class]="isExpanded || isShowing ? '' : ''">
+          <mat-list-item routerLink="/pirata">
+            <i class="fas fa-skull-crossbones icone"></i>
+            <span class="w-100 ms-1" *ngIf="isExpanded || isShowing">Piratas</span>
+          </mat-list-item>
+          <mat-list-item routerLink="/capitao">
+            <i class="fas fa-anchor icone"></i>
+            <span class="w-100 ms-1" *ngIf="isExpanded || isShowing">Capitães</span>
+          </mat-list-item>
+          <mat-list-item class="disabled" disabled>
+            <i class="fa-solid fa-ship icone"></i>
+            <span class="w-100 ms-1 disabled-text" *ngIf="isExpanded || isShowing">Navios</span>
+          </mat-list-item>
+          <mat-list-item class="disabled" disabled>
+            <i class="fa-solid fa-dharmachakra icone"></i>
+            <span class="w-100 ms-1 disabled-text" *ngIf="isExpanded || isShowing">Timoneiros</span>
+          </mat-list-item>
+
+          <mat-list-item (click)="showAccountSubMenu = !showAccountSubMenu; onAccountClick()" *ngIf="usuario">
+            <i class="fas fa-user icone"></i>
+            <span class="w-100 ms-1 mt-0" *ngIf="isExpanded || isShowing">Conta</span>
+            <mat-icon class="menu-button align-middle expand_more" [ngClass]="{'rotated' : showAccountSubMenu}"
+              *ngIf="isExpanded || isShowing">expand_more</mat-icon>
+          </mat-list-item>
+          <div class="submenu" [ngClass]="{'expanded' : showAccountSubMenu}"
+            *ngIf="(isShowing || isExpanded) && usuario">
+            <a mat-list-item routerLink="/user/profile-update">
+              <i class="fas fa-user-edit icone"></i>
+              <span class="w-100 ms-1">Atualizar perfil</span>
+            </a>
+            <a mat-list-item class="disabled" disabled>
+              <i class="fas fa-lock icone" style="margin-left: -1px;"></i>
+              <span class="w-100 ms-1 disabled-text">Trocar senha</span>
+            </a>
+            <a mat-list-item (click)="logout()">
+              <i class="fas fa-sign-out-alt icone"></i>
+              <span class="w-100 ms-1">Sair</span>
+            </a>
+          </div>
+
+          <mat-list-item *ngIf="!usuario" routerLink="/login">
+            <i class="fas fa-sign-in-alt menu-icon icone"></i>
+            <span class="w-100 ms-1" *ngIf="isExpanded || isShowing">Entrar</span>
+          </mat-list-item>
+
+        </mat-nav-list>
+      </mat-sidenav>
+    </div>
+
+    <div class="overlay" [ngClass]="{'overlay-expanded': isExpanded || isShowing}" (click)="isExpanded = !isExpanded">
+    </div>
+
+    <div class="mat-sidenav-content">
+      <div *ngIf="loadingRoute" class="loading-spinner">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div class="router-container">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-container>
   <app-footer></app-footer>
 </div>

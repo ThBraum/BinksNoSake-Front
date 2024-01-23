@@ -39,7 +39,6 @@ export class CapitaoCriacaoComponent implements OnInit {
 
     this.pirataService.getPiratas(filtro).subscribe({
       next: (piratas) => {
-        console.log(piratas);
         this.todosPiratas = piratas.piratas;
       }
     });

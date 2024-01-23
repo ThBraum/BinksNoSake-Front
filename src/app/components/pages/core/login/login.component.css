@@ -270,7 +270,7 @@ input:focus {
 }
 
 .login-space .group .label {
-  color: #d8d6d6;
+  color: #e0e0e0;
   font-size: 13px;
   margin-top: 5px;
   margin-bottom: 1px;
@@ -378,7 +378,7 @@ mat-hint {
   margin-top: -10px;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 767.98px) {
   .sign-up-form .row {
     display: flex;
     flex-wrap: wrap;
@@ -395,7 +395,7 @@ mat-hint {
   .login-space .group .input,
   .login-space .group .button {
     border: none;
-    padding: 15px 25px;
+    padding: 15px 15px;
     border-radius: 25px;
     background: rgba(255, 255, 255, 0.356);
   }
@@ -413,4 +413,38 @@ mat-hint {
   .sign-up-form .group .button {
     height: 35px;
   }
+
+  .button-container {
+    position: relative;
+  }
+
+  .button-text {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .button-container {
+    position: relative;
+  }
+
+  .button-text {
+    position: absolute;
+    top: 15px !important;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+mat-hint {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.password-input-container {
+  position: relative;
+  margin-bottom: -10px;
 }

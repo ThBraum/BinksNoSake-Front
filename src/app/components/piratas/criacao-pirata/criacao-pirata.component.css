@@ -93,3 +93,8 @@ img {
   border-radius: 10%;
   display: block;
 }
+
+.delete-icon {
+  position: relative;
+  top: -20px;
+}

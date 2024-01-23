@@ -6,6 +6,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,8 +20,6 @@ import { JwtModule, JwtModuleOptions, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { JwtInterceptor } from './interceptor/jwt.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-import { PirataDetalhesComponent } from './components/piratas/pirata-detalhes/pirata-detalhes.component';
-import { PirataListaComponent } from './components/piratas/pirata-lista/pirata-lista.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from './modules/shared/shared.module';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -52,6 +51,7 @@ function tokenGetter() {
     FormsModule,
     MatTooltipModule,
     MatDatepickerModule,
+    MatListModule,
     JwtModule.forRoot({ config: { tokenGetter } }),
   ],
   providers: [

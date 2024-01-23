@@ -1,5 +1,5 @@
-.telaCheia{
-  height: 100vh;
+.telaCheia {
+  min-height: 100vh;
   display: grid;
   grid-template-rows: min-content auto min-content;
 }
@@ -15,4 +15,187 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.image {
+  position: relative;
+  display: block;
+  pointer-events: none;
+  cursor: default;
+  width: auto;
+  height: 110px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.user-info {
+  text-align: center;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.divider {
+  height: 1px;
+  background-color: #b3b3b3;
+  margin: 10px 5px 10px 5px;
+}
+
+.icone {
+  min-width: 20px;
+  text-align: center;
+}
+
+.expand_more {
+  margin-left: 73px;
+}
+
+.sidenav-container {
+  display: grid;
+}
+
+.mat-sidenav {
+  height: 100%;
+  z-index: 2;
+  position: relative;
+  float: left;
+  max-width: 200px;
+}
+
+.mat-sidenav-content {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin-left: 37px;
+}
+
+.menu-button {
+  transition: 300ms ease-in-out;
+  transform: rotate(0deg);
+}
+
+.menu-button.rotated {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  overflow-y: hidden;
+  transition: transform 300ms ease;
+  transform: scaleY(0);
+  transform-origin: top;
+  padding-left: 30px;
+}
+
+.submenu.expanded {
+  transform: scaleY(1);
+}
+
+.mat-sidenav-container,
+.mat-sidenav {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.mat-nav-list a,
+.mat-list-item {
+  padding: 12px;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  align-items: center;
+}
+
+.mat-list-item {
+  cursor: pointer;
+}
+
+.mat-list-item:hover {
+  background-color: #e0e0e0;
+}
+
+.sidenav {
+  position: absolute;
+  height: 100%;
+  z-index: 5;
+}
+
+::ng-deep mat-sidenav-content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.mdc-list-item {
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.logo-background {
+  background: white;
+  border-radius: 0.313rem;
+  height: 38px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  margin-left: 5px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+header {
+  height: 60px;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.4;
+}
+
+.disabled-text {
+  pointer-events: none;
+  cursor: default;
+}
+
+@media screen and (max-width: 767.98px) {
+  img {
+    margin-left: -5px;
+    margin-bottom: 8px;
+  }
+}
+
+@media screen and (min-width: 767px) {
+  * {
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .mat-drawer-inner-container {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    min-width: 300px;
+  }
+}
+
+.router-container {
+  height: 100%;
+  position: relative;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 2;
+}
+
+.overlay-expanded {
+  display: block;
 }

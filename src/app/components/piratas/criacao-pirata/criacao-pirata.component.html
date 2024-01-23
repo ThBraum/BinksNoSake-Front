@@ -47,7 +47,7 @@
                 <input id="fileInput" #fileInput type='file' accept="image/*" (change)="onSelectFile($event)">
                 <button mat-icon-button color="primary" *ngIf="imagemUrl" (click)="delete()" type="button"
                   class="position-absolute top-0 end-0" style="margin: -12px -20px 0 0;">
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon class="delete-icon">delete</mat-icon>
                 </button>
                 <div class="text-center">
                   <button mat-raised-button color="primary" type="button" (click)="fileInput.click()"

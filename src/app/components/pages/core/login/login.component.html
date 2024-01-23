@@ -109,7 +109,7 @@
                   [attr.aria-pressed]="hidePassword" class="password-toggle-button hide-button">
                   <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-                <mat-hint><strong>A senha deve ter pelo menos 6 caracteres</strong></mat-hint>
+                <mat-hint>A senha deve ter pelo menos 6 caracteres</mat-hint>
               </div>
             </div>
             <div class="group">
@@ -123,18 +123,27 @@
                   class="password-toggle-button hide-button">
                   <mat-icon>{{hidePasswordConfirmation ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-                <mat-hint><strong>Confirme a senha inserida anteriormente</strong></mat-hint>
+                <mat-hint>Confirme a senha inserida anteriormente</mat-hint>
               </div>
             </div>
             <ng-container *ngIf="signUpForm.valid; else invalid2">
-              <div class="group" (click)="generateFormData(signUpForm.value)"> <input type="submit"
-                  class="button register-button" value="Registrar" [ngClass]="{'disabled-button': !signUpForm.valid}">
+              <div class="group" (click)="generateFormData(signUpForm.value)">
+                <div class="button-container">
+                  <input title="valid_register_button" type="submit" class="button register-button" value=""
+                    [ngClass]="{'disabled-button': !signUpForm.valid, 'custom-text-class-mobile': true}">
+                  <span class="button-text">REGISTRAR</span>
+                </div>
               </div>
             </ng-container>
             <ng-template #invalid2>
-              <div class="group"> <input type="submit" class="button register-button"
-                  value="Registrar" [ngClass]="{'disabled-button': !signUpForm.valid}"
-                  matTooltip="Preencha os campos obrigatórios." matTooltipPosition="above" disabled> </div>
+              <div class="group">
+                <div class="button-container">
+                  <input title="invalid_register_button" type="submit" class="button register-button" value=""
+                    [ngClass]="{'disabled-button': !signUpForm.valid, 'custom-text-class-mobile': true}"
+                    matTooltip="Preencha os campos obrigatórios." matTooltipPosition="above" disabled>
+                  <span class="button-text">REGISTRAR</span>
+                </div>
+              </div>
             </ng-template>
           </div>
         </div>
