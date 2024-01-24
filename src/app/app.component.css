@@ -47,8 +47,16 @@
   text-align: center;
 }
 
-.expand_more {
-  margin-left: 73px;
+.header-icone {
+  color: white;
+  font-size: 20px;
+  line-height: 50px;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.d-flex i.header-icone {
+  margin-right: auto;
 }
 
 .sidenav-container {
@@ -133,15 +141,10 @@
 }
 
 .logo-background {
-  background: white;
-  border-radius: 0.313rem;
   height: 38px;
   width: 40px;
   display: flex;
   align-items: center;
-  margin-left: 5px;
-  margin-top: 5px;
-  cursor: pointer;
 }
 
 header {
@@ -160,9 +163,12 @@ header {
 }
 
 @media screen and (max-width: 767.98px) {
-  img {
-    margin-left: -5px;
-    margin-bottom: 8px;
+  .custom-sidenav-expanded {
+    min-width: 210px;
+  }
+
+  .expand_more {
+    margin-left: 78px;
   }
 }
 
@@ -178,6 +184,22 @@ header {
     overflow: auto;
     min-width: 300px;
   }
+
+  .custom-sidenav-expanded {
+    min-width: 250px;
+  }
+
+  .expand_more {
+    margin-left: 128px;
+  }
+}
+
+.custom-sidenav {
+  transition: min-width 0.1s ease;
+}
+
+.custom-sidenav-collapsed {
+  min-width: 48px;
 }
 
 .router-container {
