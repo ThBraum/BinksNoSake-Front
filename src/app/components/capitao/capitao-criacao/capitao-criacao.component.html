@@ -4,13 +4,13 @@
     <form [formGroup]="camposCapitao">
       <div class="row g-0 gap-0 mb-2 mb-md-0 mt-3">
         <div class="col-md">
-          <div class="col-12">
+          <div class="col-12 mt-2" [ngStyle]="{ 'margin-top.px': isMobile ? -35 : 0 }">
             <mat-form-field appearance="fill" class="w-100 no-space-hint">
               <mat-label>Nome</mat-label>
               <input matInput placeholder="Ex. Luffy" formControlName="nome">
             </mat-form-field>
           </div>
-          <div class="col-12">
+          <div class="col-12 mt-4" [ngStyle]="{ 'margin-top.px': isMobile ? -55 : 0 }">
             <mat-form-field appearance="fill" class="w-100 no-space-hint mt-4">
               <mat-label>Piratas</mat-label>
               <mat-select formControlName="piratas" multiple>
@@ -24,15 +24,17 @@
         </div>
         <div class="col-12 col-md-auto order-first order-md-last ms-3">
           <div class="col-12 text-center">
-            <label class="hoverable m-md-0 centralize-on-mobile" for="fileInput">
+            <label class="hoverable m-md-0 centralize-on-mobile" for="fileInput" (mouseenter)="isHovered = true"
+              (mouseleave)="isHovered = false">
               <img title="image" [src]="imagemUrl">
               <div class="hover-text" style="overflow-wrap: break-word;">Alterar imagem</div>
-              <div class="background"></div>
+              <div class="background" *ngIf="isHovered"></div>
             </label>
             <input id="fileInput" #fileInput type="file" accept="image/*" (change)="onSelectFile($event)">
             <div class="delete-button">
               <div class="text-center">
-                <button mat-raised-button color="primary" type="button" (click)="fileInput.click()" class="col-auto my-2" style="margin-left: -25px;">
+                <button mat-raised-button color="primary" type="button" (click)="fileInput.click()"
+                  class="col-auto my-2" style="margin-left: -25px;">
                   Alterar imagem
                 </button>
               </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Capitao } from 'src/app/interfaces/capitao/capitao';
@@ -21,6 +21,8 @@ export class CapitaoCriacaoComponent implements OnInit {
   imagemUrl: string | ArrayBuffer | null | undefined = '../../../../assets/cloud-upload.jpg'
   file: File | null = null;
   camposCapitao!: FormGroup;
+  isHovered: boolean = false;
+  isMobile: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +30,7 @@ export class CapitaoCriacaoComponent implements OnInit {
     private readonly capitaoService: CapitaoService,
     private readonly snackBarService: SnackBarService,
     private readonly router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +49,11 @@ export class CapitaoCriacaoComponent implements OnInit {
     this.camposCapitao = this.fb.group({
       nome: ['', Validators.required],
       piratas: ['', Validators.required],
+    });
+
+    this.checkIsMobile();
+    window.addEventListener('resize', () => {
+      this.checkIsMobile();
     });
   }
 
@@ -109,6 +117,19 @@ export class CapitaoCriacaoComponent implements OnInit {
   delete() {
     this.file = null;
     this.mostrarImagem(undefined);
+  }
+
+  onHover() {
+    this.isHovered = true;
+  }
+
+  onMouseOut() {
+    this.isHovered = false;
+  }
+
+  private checkIsMobile() {
+    this.isMobile = window.innerWidth <= 767;
+    this.cdr.detectChanges();
   }
 
   displaySelectedPirates(selectedPirates: Pirata[] | null): string {

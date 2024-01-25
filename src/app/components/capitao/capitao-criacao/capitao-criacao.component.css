@@ -3,44 +3,87 @@
     margin-left: auto !important;
     margin-right: auto !important;
   }
+
+  img {
+    height: 200px;
+    width: auto;
+    aspect-ratio: 4/3;
+    border-radius: 10%;
+  }
+
+  .hoverable {
+    position: relative;
+    display: block;
+    cursor: pointer;
+    width: auto;
+    height: 200px;
+    aspect-ratio: 4/3;
+    border-radius: 10%;
+  }
+
+  .hoverable .hover-text {
+    background-image: none;
+    position: absolute;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-20%, -40%);
+    z-index: 2;
+  }
+
+  .hoverable:hover .background {
+    border-radius: 10%;
+    display: block;
+    top: 0;
+    margin-top: -200px;
+    background-color: rgba(99, 98, 98, 0.932);
+  }
+
+  .form-container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .input-nome {
+    margin-top: 20px;
+  }
 }
+
 
 img {
-  height: 150px;
+  height: 200px;
   width: auto;
   aspect-ratio: 4/3;
-  margin-left: -15px;
   border-radius: 10%;
 }
 
-.hoverable .background {
+.hoverable .hover-text {
+  background-image: none;
   position: absolute;
   display: none;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  pointer-events: none;
-  border-radius: 10%;
-  z-index: 1;
-  width: auto;
-  height: 150px;
-  aspect-ratio: 4/3;
-  margin-left: -25px;
-  margin-right: 7px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: white;
 }
 
 .hoverable:hover .hover-text {
   background-image: none;
   display: block;
+  margin-left: -35px;
+  z-index: 3;
 }
 
 .hoverable:hover .background {
   display: block;
   background-image: none;
-  background-color: rgba(116, 116, 116, 0.932);
+  background-color: rgba(99, 98, 98, 0.932);
   z-index: 0;
-  margin-left: -8px !important;
+  margin-left: 0px !important;
+  top: 0;
+  margin-top: -200px;
+  z-index: 2;
 }
 
 #fileInput {
@@ -52,18 +95,19 @@ img {
   display: block;
   cursor: pointer;
   width: auto;
-  height: 150px;
+  height: 200px;
   aspect-ratio: 4/3;
-  margin-left: -15px;
+  margin-left: -25px;
   border-radius: 10%;
+  z-index: 3;
 }
 
 .hoverable .hover-text {
   background-image: none;
   position: absolute;
   display: none;
-  top: 53%;
-  left: 30%;
+  top: 50%;
+  left: 50%;
   transform: translate(-20%, -40%);
   z-index: 2;
 }
@@ -71,6 +115,8 @@ img {
 .hoverable:hover .background {
   border-radius: 10%;
   display: block;
+  top: 0;
+  background-color: rgba(99, 98, 98, 0.932);
 }
 
 .additional-selection {
@@ -82,10 +128,9 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
 }
 
 .delete-button .position-absolute {
-  margin-top: 10px;
+  margin-top: -10px;
   margin-right: 0 !important;
 }
